@@ -102,26 +102,9 @@
     }
 
     .hand-card img {
-      max-width: 80%;
-      max-height: 80%;
+      max-width: 85%;
+      max-height: 85%;
       object-fit: contain;
-    }
-
-    .word-slot {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .letter-slot {
-      width: 40px;
-      height: 50px;
-      border-bottom: 3px solid var(--primary);
-      font-size: 28px;
-      font-weight: bold;
-      text-align: center;
-      text-transform: uppercase;
-      line-height: 50px;
     }
 
     .options-grid {
@@ -197,34 +180,26 @@
   <div class="container">
     <div class="score-board">
       <span id="score-display">Pontos: 0</span>
-      <span id="level-display">Atividade 1/3</span>
+      <span id="mode-title">Modo: Descubra a Palavra</span>
     </div>
 
     <div class="nav-modes">
-      <button class="btn-mode active" onclick="switchMode('read-word')">1. Descubra a Palavra</button>
-      <button class="btn-mode" onclick="switchMode('match-letter')">2. Qual é a Letra?</button>
-      <button class="btn-mode" onclick="switchMode('speed-run')">3. Desafio Rápido</button>
+      <button class="btn-mode active" onclick="switchMode('read-word', event)">1. Descubra a Palavra</button>
+      <button class="btn-mode" onclick="switchMode('match-letter', event)">2. Qual é a Letra?</button>
+      <button class="btn-mode" onclick="switchMode('speed-run', event)">3. Desafio Rápido</button>
     </div>
 
     <div class="game-area" id="game-area">
-      <!-- Conteúdo injetado via JavaScript -->
+      <!-- Conteúdo do jogo gerado dinamicamente -->
     </div>
 
     <div class="feedback" id="feedback"></div>
   </div>
 
   <script>
-    // CONFIGURAÇÃO DO BANCO DE IMAGENS
-    // Altere para o seu usuário e repositório no GitHub
-    const REPO_CONFIG = {
-      owner: "rwpo",
-      repo: "Libras_Kids",
-      branch: "main",
-      folderPath: "assets/alfabeto"
-    };
-
-    // Mapeamento local padrão (Fallback caso a API não esteja conectada)
-    const LOCAL_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    // CAMINHO RELATIVO LOCAL DAS IMAGENS
+    const FOLDER_PATH = "./assets/alfabeto";
+    const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
     let imagesBank = {};
 
     // Estado do jogo
@@ -232,49 +207,28 @@
     let score = 0;
     let currentTarget = null;
 
-    // Inicialização
-    async function initGame() {
-      await loadImagesFromGitHub();
+    // Inicialização direta usando caminhos relativos
+    function initGame() {
+      ALPHABET.forEach(letter => {
+        // Mapeia cada letra para a imagem .png correspondente
+        imagesBank[letter] = `${FOLDER_PATH}/${letter}.png`;
+      });
       renderGame();
     }
 
-    // Função simplificada que busca direto da pasta do seu repositório
-async function loadImagesFromGitHub() {
-  const LOCAL_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  
-  LOCAL_ALPHABET.forEach(letter => {
-    // Aponta direto para a pasta assets/alfabeto/
-    imagesBank[letter] = `./assets/alfabeto/${letter}.png`;
-  });
-}
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Repositório local ou caminho não encontrado.");
-        
-        const files = await response.json();
-        
-        files.forEach(file => {
-          // Espera arquivos com nome A.png, B.png, etc.
-          const letterMatch = file.name.match(/^([a-zA-Z])\.(png|jpg|jpeg|svg)$/i);
-          if (letterMatch) {
-            const letter = letterMatch[1].toUpperCase();
-            imagesBank[letter] = file.download_url;
-          }
-        });
-      } catch (err) {
-        console.warn("Usando caminhos locais de fallback para imagens:", err.message);
-        // Fallback: carrega do caminho relativo assets/alfabeto/A.png
-        LOCAL_ALPHABET.forEach(letter => {
-          imagesBank[letter] = `./${REPO_CONFIG.folderPath}/${letter}.png`;
-        });
-      }
-    }
-
-    function switchMode(mode) {
+    function switchMode(mode, evt) {
       currentMode = mode;
       document.querySelectorAll('.btn-mode').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+      if (evt) evt.target.classList.add('active');
       document.getElementById('feedback').innerText = '';
+      
+      const titles = {
+        'read-word': 'Modo: Descubra a Palavra',
+        'match-letter': 'Modo: Qual é a Letra?',
+        'speed-run': 'Modo: Desafio Rápido'
+      };
+      document.getElementById('mode-title').innerText = titles[mode];
+      
       renderGame();
     }
 
@@ -283,7 +237,7 @@ async function loadImagesFromGitHub() {
       area.innerHTML = '';
 
       if (currentMode === 'read-word') {
-        const words = ["SOL", "CASA", "AMIGO", "LIBRAS", "JOGO", "ESCOLA", "FLOR"];
+        const words = ["SOL", "CASA", "AMIGO", "LIBRAS", "JOGO", "ESCOLA", "FLOR", "BOM", "VIDA"];
         currentTarget = words[Math.floor(Math.random() * words.length)];
 
         const handDisplay = document.createElement('div');
@@ -293,8 +247,17 @@ async function loadImagesFromGitHub() {
           const card = document.createElement('div');
           card.className = 'hand-card';
           const img = document.createElement('img');
-          img.src = imagesBank[char] || '';
+          img.src = imagesBank[char];
           img.alt = `Sinal da letra ${char}`;
+          
+          // Tratamento para caso a imagem individual falhe ao carregar
+          img.onerror = () => {
+            img.style.display = 'none';
+            card.innerText = char; // Exibe a letra como fallback se a imagem faltar
+            card.style.fontSize = '24px';
+            card.style.fontWeight = 'bold';
+          };
+
           card.appendChild(img);
           handDisplay.appendChild(card);
         });
@@ -304,6 +267,7 @@ async function loadImagesFromGitHub() {
         input.id = 'word-input';
         input.placeholder = 'Digite a palavra...';
         input.maxLength = currentTarget.length;
+        input.onkeyup = (e) => { if (e.key === 'Enter') checkWordAnswer(input.value.trim().toUpperCase()); };
 
         const btn = document.createElement('button');
         btn.className = 'btn-submit';
@@ -313,10 +277,10 @@ async function loadImagesFromGitHub() {
         area.appendChild(handDisplay);
         area.appendChild(input);
         area.appendChild(btn);
+        setTimeout(() => input.focus(), 100);
 
       } else if (currentMode === 'match-letter') {
-        const letters = Object.keys(imagesBank);
-        currentTarget = letters[Math.floor(Math.random() * letters.length)];
+        currentTarget = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
 
         const handDisplay = document.createElement('div');
         handDisplay.className = 'hand-display';
@@ -328,31 +292,7 @@ async function loadImagesFromGitHub() {
 
         const img = document.createElement('img');
         img.src = imagesBank[currentTarget];
-        img.alt = `Sinal da letra`;
-        card.appendChild(img);
-        handDisplay.appendChild(card);
-
-        // Gerar 4 opções
-        let options = [currentTarget];
-        while (options.length < 4) {
-          let rand = letters[Math.floor(Math.random() * letters.length)];
-          if (!options.includes(rand)) options.push(rand);
-        }
-        options.sort(() => Math.random() - 0.5);
-
-        const optionsGrid = document.createElement('div');
-        optionsGrid.className = 'options-grid';
-
-        options.forEach(opt => {
-          const optBtn = document.createElement('button');
-          optBtn.className = 'btn-option';
-          optBtn.innerText = opt;
-          optBtn.onclick = () => checkOptionAnswer(opt);
-          optionsGrid.appendChild(optBtn);
-        });
-
-        area.appendChild(handDisplay);
-        area.appendChild(optionsGrid);
-
-      } else if (currentMode === 'speed-run') {
-        // Desafio rápido: associação direta com cronômetro visual
+        img.alt = `Sinal da letra em Libras`;
+        
+        img.onerror = () => {
+          img.
