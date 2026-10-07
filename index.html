@@ -238,10 +238,15 @@
       renderGame();
     }
 
-    // Busca dinâmica de imagens do repositório via API do GitHub
-    async function loadImagesFromGitHub() {
-      const url = `https://api.github.com/repos/${REPO_CONFIG.owner}/${REPO_CONFIG.repo}/contents/${REPO_CONFIG.folderPath}?ref=${REPO_CONFIG.branch}`;
-      
+    // Função simplificada que busca direto da pasta do seu repositório
+async function loadImagesFromGitHub() {
+  const LOCAL_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  
+  LOCAL_ALPHABET.forEach(letter => {
+    // Aponta direto para a pasta assets/alfabeto/
+    imagesBank[letter] = `./assets/alfabeto/${letter}.png`;
+  });
+}
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error("Repositório local ou caminho não encontrado.");
