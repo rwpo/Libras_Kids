@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detetive da Datilologia - Libras Kids</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF5964;
+      --secondary: #FFD166;
+      --accent: #06D6A0;
+      --blue: #118AB2;
+      --dark: #073B4C;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background: linear-gradient(135deg, #118AB2, #073B4C);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    .game-container {
+      background: #F8F9FA;
+      width: 100%;
+      max-width: 800px;
+      border-radius: 28px;
+      padding: 25px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border: 6px solid var(--secondary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .title-box {
+      background: var(--primary);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      box-shadow: 0 6px 0 #d63031;
+    }
+
+    .stats-container {
+      display: flex;
+      gap: 15px;
+    }
+
+    .stat-badge {
+      background: white;
+      padding: 8px 16px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      border: 2px solid #E9ECEF;
+    }
+
+    .stat-badge span {
+      color: var(--primary);
+    }
+
+    .card-board {
+      background: white;
+      width: 100%;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .instruction {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .hands-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      min-height: 120px;
+      align-items: center;
+    }
+
+    .hand-card {
+      background: #F1F3F5;
+      border: 3px solid #DEE2E6;
+      border-radius: 16px;
+      width: 90px;
+      height: 110px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 6px 0 #CED4DA;
+      transition: transform 0.2s;
+    }
+
+    .hand-card img {
+      max-width: 85%;
+      max-height: 85%;
+      object-fit: contain;
+    }
+
+    .word-slots {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .slot {
+      width: 45px;
+      height: 55px;
+      border-bottom: 4px solid var(--blue);
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--dark);
+      text-transform: uppercase;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      .options-grid { grid-template-columns: 1fr; }
+      .hand-card { width: 70px; height: 90px; }
+      .slot { width: 35px; height: 45px; font-size: 1.6rem; }
+    }
+
+    .btn-option {
+      background: white;
+      border: 3px solid #E9ECEF;
+      border-radius: 18px;
+      padding: 16px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--dark);
+      cursor: pointer;
+      box-shadow: 0 6px 0 #CED4DA;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+
+    .btn-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #CED4DA;
+      border-color: var(--blue);
+    }
+
+    .btn-option:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #CED4DA;
+    }
+
+    .btn-option.correct {
+      background: var(--accent) !important;
+      color: white !important;
+      border-color: #05b386 !important;
+      box-shadow: 0 6px 0 #048a67 !important;
+    }
+
+    .btn-option.wrong {
+      background: var(--primary) !important;
+      color: white !important;
+      border-color: #d63031 !important;
+      box-shadow: 0 6px 0 #b22222 !important;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      text-align: center;
+      z-index: 100;
+    }
+
+    .overlay h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.5rem;
+      color: var(--blue);
+      margin-bottom: 15px;
+    }
+
+    .overlay p {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: #495057;
+    }
+
+    .btn-start {
+      background: var(--accent);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 8px 0 #05b386;
+      transition: all 0.2s;
+    }
+
+    .btn-start:hover { transform: scale(1.05); }
+    .btn-start:active { transform: translateY(4px); box-shadow: 0 4px 0 #05b386; }
+
+    .hidden { display: none !important; }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      z-index: 999;
+      animation: fall 2.5s linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(105vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game-container">
+
+    <!-- Tela Inicial -->
+    <div id="start-screen" class="overlay">
+      <h2>🕵️ Detetive da Datilologia</h2>
+      <p>Descubra os substantivos escondidos nas letras em Libras e mostre que você é um super detetive!</p>
+      <button class="btn-start" id="btn-jogar" onclick="iniciarJogo()">JOGAR AGORA</button>
+    </div>
+
+    <!-- Tela de Vitória -->
+    <div id="end-screen" class="overlay hidden">
+      <h2>🎉 PARABÉNS!</h2>
+      <p id="final-score">Você concluiu todos os desafios!</p>
+      <button class="btn-start" id="btn-reiniciar" onclick="iniciarJogo()">JOGAR NOVAMENTE</button>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header>
+      <div class="title-box">LIBRAS KIDS</div>
+      <div class="stats-container">
+        <div class="stat-badge">⭐ Pontos: <span id="score-val">0</span></div>
+        <div class="stat-badge">🎯 Fases: <span id="phase-val">1/10</span></div>
+      </div>
+    </header>
+
+    <!-- Tabuleiro -->
+    <main class="card-board">
+      <div class="instruction">Qual é o substantivo em Libras abaixo?</div>
+      <div class="hands-wrapper" id="hands-container"></div>
+      <div class="word-slots" id="slots-container"></div>
+    </main>
+
+    <!-- Opções -->
+    <div class="options-grid" id="options-container"></div>
+
+  </div>
+
+  <script>
+    const CAMINHO_IMAGENS = "https://raw.githubusercontent.com/rwpo/Libras_Kids/main/assets/alfabeto/"; 
+    const EXTENSAO = ".png";
+
+    const BANCO
