@@ -9,15 +9,13 @@
       --bg-color: #f0f4f8;
       --card-bg: #ffffff;
       --primary: #4a90e2;
-      --primary-hover: #357abd;
-      --accent: #ff9f43;
       --success: #2ecc71;
       --danger: #e74c3c;
       --text: #2c3e50;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Arial, sans-serif;
       background-color: var(--bg-color);
       color: var(--text);
       margin: 0;
@@ -34,7 +32,7 @@
 
     h1 {
       color: var(--primary);
-      margin-bottom: 5px;
+      margin: 0 0 5px 0;
     }
 
     .container {
@@ -45,6 +43,15 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.08);
       padding: 24px;
       box-sizing: border-box;
+    }
+
+    .score-board {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-weight: bold;
+      color: #64748b;
+      margin-bottom: 15px;
     }
 
     .nav-modes {
@@ -63,10 +70,9 @@
       border-radius: 20px;
       font-weight: bold;
       cursor: pointer;
-      transition: all 0.2s;
     }
 
-    .btn-mode.active, .btn-mode:hover {
+    .btn-mode.active {
       background: var(--primary);
       color: white;
     }
@@ -75,7 +81,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 320px;
+      min-height: 250px;
       justify-content: center;
     }
 
@@ -85,25 +91,22 @@
       justify-content: center;
       flex-wrap: wrap;
       margin: 20px 0;
-      min-height: 120px;
-      align-items: center;
     }
 
     .hand-card {
-      width: 90px;
-      height: 110px;
+      width: 80px;
+      height: 100px;
       border: 2px solid #e2e8f0;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #fafafa;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
 
     .hand-card img {
-      max-width: 85%;
-      max-height: 85%;
+      max-width: 80%;
+      max-height: 80%;
       object-fit: contain;
     }
 
@@ -112,7 +115,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       width: 100%;
-      max-width: 500px;
+      max-width: 400px;
     }
 
     .btn-option {
@@ -123,22 +126,16 @@
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.1s, border-color 0.2s;
-    }
-
-    .btn-option:hover {
-      border-color: var(--primary);
-      transform: translateY(-2px);
     }
 
     input[type="text"] {
-      padding: 12px 20px;
+      padding: 10px;
       font-size: 20px;
       border: 2px solid #cbd5e1;
-      border-radius: 10px;
+      border-radius: 8px;
       text-align: center;
       text-transform: uppercase;
-      width: 250px;
+      width: 200px;
       margin-bottom: 15px;
     }
 
@@ -146,10 +143,10 @@
       background: var(--success);
       color: white;
       border: none;
-      padding: 12px 28px;
+      padding: 10px 24px;
       font-size: 18px;
       font-weight: bold;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
     }
 
@@ -157,16 +154,8 @@
       margin-top: 15px;
       font-size: 18px;
       font-weight: bold;
-      min-height: 27px;
-    }
-
-    .score-board {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      font-weight: bold;
-      color: #64748b;
-      margin-bottom: 15px;
+      text-align: center;
+      min-height: 25px;
     }
   </style>
 </head>
@@ -184,21 +173,18 @@
     </div>
 
     <div class="nav-modes">
-      <button class="btn-mode active" onclick="switchMode('read-word', event)">1. Descubra a Palavra</button>
-      <button class="btn-mode" onclick="switchMode('match-letter', event)">2. Qual é a Letra?</button>
-      <button class="btn-mode" onclick="switchMode('speed-run', event)">3. Desafio Rápido</button>
+      <button id="btn-mode-1" class="btn-mode active" onclick="setMode('read-word')">1. Descubra a Palavra</button>
+      <button id="btn-mode-2" class="btn-mode" onclick="setMode('match-letter')">2. Qual é a Letra?</button>
+      <button id="btn-mode-3" class="btn-mode" onclick="setMode('speed-run')">3. Desafio Rápido</button>
     </div>
 
-    <div class="game-area" id="game-area">
-      <!-- Conteúdo do jogo gerado dinamicamente -->
-    </div>
+    <div class="game-area" id="game-area"></div>
 
     <div class="feedback" id="feedback"></div>
   </div>
 
   <script>
-    // Banco de imagens hospedadas via URLs públicas
-    const ONLINE_IMAGES = {
+    const IMAGES = {
       'A': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Sign_language_A.svg/120px-Sign_language_A.svg.png',
       'B': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Sign_language_B.svg/120px-Sign_language_B.svg.png',
       'C': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Sign_language_C.svg/120px-Sign_language_C.svg.png',
@@ -227,47 +213,110 @@
       'Z': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Sign_language_Z.svg/120px-Sign_language_Z.svg.png'
     };
 
-    const ALPHABET = Object.keys(ONLINE_IMAGES);
-    let imagesBank = ONLINE_IMAGES;
-
+    const ALPHABET = Object.keys(IMAGES);
     let currentMode = 'read-word';
     let score = 0;
-    let currentTarget = null;
+    let target = '';
 
-    function initGame() {
-      renderGame();
-    }
-
-    function switchMode(mode, evt) {
+    function setMode(mode) {
       currentMode = mode;
-      document.querySelectorAll('.btn-mode').forEach(b => b.classList.remove('active'));
-      if (evt) evt.target.classList.add('active');
-      document.getElementById('feedback').innerText = '';
       
+      document.getElementById('btn-mode-1').className = mode === 'read-word' ? 'btn-mode active' : 'btn-mode';
+      document.getElementById('btn-mode-2').className = mode === 'match-letter' ? 'btn-mode active' : 'btn-mode';
+      document.getElementById('btn-mode-3').className = mode === 'speed-run' ? 'btn-mode active' : 'btn-mode';
+
       const titles = {
         'read-word': 'Modo: Descubra a Palavra',
         'match-letter': 'Modo: Qual é a Letra?',
         'speed-run': 'Modo: Desafio Rápido'
       };
       document.getElementById('mode-title').innerText = titles[mode];
-      
-      renderGame();
+      document.getElementById('feedback').innerText = '';
+
+      render();
     }
 
-    function renderGame() {
+    function render() {
       const area = document.getElementById('game-area');
       area.innerHTML = '';
 
       if (currentMode === 'read-word') {
         const words = ["SOL", "CASA", "AMIGO", "LIBRAS", "JOGO", "ESCOLA", "FLOR", "BOM", "VIDA"];
-        currentTarget = words[Math.floor(Math.random() * words.length)];
+        target = words[Math.floor(Math.random() * words.length)];
 
         const handDisplay = document.createElement('div');
         handDisplay.className = 'hand-display';
 
-        currentTarget.split('').forEach(char => {
+        target.split('').forEach(letter => {
           const card = document.createElement('div');
           card.className = 'hand-card';
-          
           const img = document.createElement('img');
-          img.src = imagesBank[char];
+          img.src = IMAGES[letter] || '';
+          img.alt = letter;
+          card.appendChild(img);
+          handDisplay.appendChild(card);
+        });
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = 'word-input';
+        input.placeholder = 'Digite aqui...';
+        input.maxLength = target.length;
+
+        const btn = document.createElement('button');
+        btn.className = 'btn-submit';
+        btn.innerText = 'Verificar';
+        btn.onclick = function() { checkWord(input.value.trim().toUpperCase()); };
+
+        area.appendChild(handDisplay);
+        area.appendChild(input);
+        area.appendChild(btn);
+
+      } else if (currentMode === 'match-letter') {
+        target = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+
+        const handDisplay = document.createElement('div');
+        handDisplay.className = 'hand-display';
+
+        const card = document.createElement('div');
+        card.className = 'hand-card';
+        card.style.width = '120px';
+        card.style.height = '140px';
+
+        const img = document.createElement('img');
+        img.src = IMAGES[target];
+        img.alt = target;
+        card.appendChild(img);
+        handDisplay.appendChild(card);
+
+        let options = [target];
+        while (options.length < 4) {
+          let rand = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+          if (!options.includes(rand)) options.push(rand);
+        }
+        options.sort(() => Math.random() - 0.5);
+
+        const optionsGrid = document.createElement('div');
+        optionsGrid.className = 'options-grid';
+
+        options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'btn-option';
+          btn.innerText = opt;
+          btn.onclick = function() { checkOption(opt); };
+          optionsGrid.appendChild(btn);
+        });
+
+        area.appendChild(handDisplay);
+        area.appendChild(optionsGrid);
+
+      } else if (currentMode === 'speed-run') {
+        target = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+
+        const handDisplay = document.createElement('div');
+        handDisplay.className = 'hand-display';
+
+        const card = document.createElement('div');
+        card.className = 'hand-card';
+        card.style.width = '120px';
+        card.style.height = '14
