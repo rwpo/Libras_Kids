@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Libras Kids - Alfabeto e Datilologia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <style>
+    :root {
+      --primary: #FF6B6B;
+      --secondary: #4ECDC4;
+      --yellow: #FFE66D;
+      --purple: #8B5CF6;
+      --blue: #3B82F6;
+      --green: #10B981;
+      --dark: #2D3748;
+      --light: #F7FAFC;
+      --shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background-color: #F0F4F8;
+      background-image: radial-gradient(#CBD5E1 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, .font-fun {
+      font-family: 'Fredoka', cursive;
+    }
+
+    header {
+      background: linear-gradient(135deg, #6EE7B7, #3B82F6, #9333EA);
+      color: white;
+      padding: 1.2rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      font-size: 2.2rem;
+      background: rgba(255,255,255,0.2);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-title {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      background: rgba(255,255,255,0.2);
+      padding: 5px;
+      border-radius: 30px;
+      backdrop-filter: blur(5px);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-btn.active, .nav-btn:hover {
+      background: white;
+      color: var(--purple);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1100px;
+      width: 100%;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .section-panel {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .section-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .info-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px 25px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+      border-left: 8px solid var(--secondary);
+    }
+
+    .info-card h2 {
+      color: var(--purple);
+      margin-bottom: 8px;
+    }
+
+    /* ALFABETO GRID */
+    .grid-alfabeto {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 15px;
+    }
+
+    .card-letra {
+      background: white;
+      border-radius: 16px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 3px solid #E2E8F0;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-letra:hover {
+      transform: translateY(-5px) scale(1.03);
+      border-color: var(--secondary);
+      box-shadow: var(--shadow);
+    }
+
+    .card-letra .badge-letra {
+      position: absolute;
+      top: 6px;
+      left: 8px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--purple);
+      font-family: 'Fredoka', cursive;
+    }
+
+    .card-letra img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin: 15px auto 5px;
+      display: block;
+    }
+
+    .card-letra .substantivo {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #4A5568;
+      margin-top: 4px;
+      background: #EDF2F7;
+      padding: 4px 6px;
+      border-radius: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* REPRESENTADOR DE DATILOLOGIA */
+    .translator-box {
+      background: white;
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 15px 20px;
+      font-size: 1.2rem;
+      border: 3px solid #CBD5E1;
+      border-radius: 15px;
+      outline: none;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .input-group input:focus {
+      border-color: var(--purple);
+    }
+
+    .btn-action {
+      background: var(--purple);
+      color: white;
+      border: none;
+      padding: 0 25px;
+      border-radius: 15px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-action:hover {
+      background: #7C3AED;
+      transform: scale(1.03);
+    }
+
+    .hands-display {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 30px;
+      min-height: 140px;
+      padding: 20px;
+      background: #F8FAFC;
+      border-radius: 15px;
+      border: 2px dashed #CBD5E1;
+    }
+
+    .hand-item {
+      background: white;
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      width: 90px;
+      text-align: center;
+      animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .hand-item img {
+      width: 65px;
+      height: 65px;
+      object-fit: contain;
+    }
+
+    .hand-item span {
+      display: block;
+      font-weight: 800;
+      color: var(--purple);
+      font-size: 1.1rem;
+    }
+
+    /* PLAYER DE ANIMACAO DA DATILOLOGIA */
+    .player-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn-control {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .player-view {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .single-hand-frame {
+      width: 160px;
+      height: 160px;
+      background: white;
+      border-radius: 20px;
+      border: 4px solid var(--yellow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+    }
+
+    .single-hand-frame img {
+      width: 130px;
+      height: 130px;
+      object-fit: contain;
+    }
+
+    /* JOGOS */
+    .game-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .score-board {
+      display: flex;
+      justify-content: space-around;
+      background: #FEF3C7;
+      padding: 12px;
+      border-radius: 15px;
+      margin-bottom: 25px;
+      font-weight: 800;
+      color: #92400E;
+    }
+
+    .word-challenge {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 25px 0;
+      min-height: 110px;
+      flex-wrap: wrap;
+    }
+
+    .letter-slot {
+      width: 75px;
+      height: 100px;
+      background: white;
+      border: 3px solid var(--purple);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .letter-slot img {
+      width: 55px;
+      height: 55px;
+      object-fit: contain;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .btn-option {
+      background: #F1F5F9;
+      border: 3px solid #CBD5E1;
+      padding: 12px 20px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-option:hover {
+      background: var(--yellow);
+      border-color: #F59E0B;
+      transform: scale(1.05);
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: var(--radius);
+      padding: 30px;
+      max-width: 450px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      animation: popIn 0.3s ease;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px; right: 20px;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #94A3B8;
+    }
+
+    .modal-img {
+      width: 180px;
+      height: 180px;
+      object-fit: contain;
+      margin: 15px 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #64748B;
+      font-weight: 600;
+      margin-top: auto;
+    }
+
+    @media (max-width: 600px) {
+      .header-container {
+        flex-direction: column;
+      }
+      .grid-alfabeto {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      }
+      .card-letra img {
+        width: 60px;
+        height: 60px;
+      }
+      .letter-slot {
+        width: 55px;
+        height: 80px;
+      }
+      .letter-slot img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="logo-area">
+        <div class="logo-icon">🤟</div>
+        <div class="logo-title font-fun">LIBRAS KIDS</div>
+      </div>
+      <nav>
+        <button class="nav-btn active" onclick="switchTab('alfabeto', event)">📖 Alfabeto</button>
+        <button class="nav-btn" onclick="switchTab('datilologia', event)">✍️ Escrever</button>
+        <button class="nav-btn" onclick="switchTab('jogo', event)">🎮 Jogo</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- SEÇÃO 1: ALFABETO MANUAL -->
+    <section id="sec-alfabeto" class="section-panel active">
+      <div class="info-card">
+        <h2>Alfabeto Manual em Libras</h2>
+        <p>Clique em cada letra para ver a mão maior e o substantivo representado em datilologia!</p>
+      </div>
+      <div class="grid-alfabeto" id="gridAlfabeto"></div>
+    </section>
+
+    <!-- SEÇÃO 2: REPRESENTADOR DE DATILOLOGIA -->
+    <section id="sec-datilologia" class="section-panel">
+      <div class="translator-box">
+        <h2 class="font-fun" style="color: var(--purple); font-size: 2rem;">Escreva em Datilologia</h2>
+        <p>Digite qualquer substantivo ou palavra abaixo para ver como ela é soletrada em Libras!</p>
+        
+        <div class="input-group">
+          <input type="text" id="inputText" placeholder="Digite uma palavra..." maxlength="15" autocomplete="off">
+          <button class="btn-action" onclick="renderDatilologia()">Ver em Libras 🚀</button>
+        </div>
+
+        <div class="player-controls" id="playerControls" style="display:none;">
+          <button class="btn-control" onclick="playAnimacion()">▶ Animado (Sinalizar)</button>
+          <button class="btn-control" style="background:#64748B" onclick="toggleViewMode()">🔄 Alternar Modo</button>
+        </div>
+
+        <!-- Exibição Estática -->
+        <div class="hands-display" id="handsContainer">
+          <p style="color: #94A3B8; margin: auto;">Sua palavra em Libras aparecerá aqui!</p>
+        </div>
+
+        <!-- Exibição Animada -->
+        <div class="player-view" id="playerView" style="display:none;">
+          <div class="single-hand-frame">
+            <img id="playerHandImg" src="" alt="Mão em Libras">
+          </div>
+          <h2 id="playerCharLabel" class="font-fun" style="margin-top: 10px; font-size: 2.5rem; color: var(--purple);">-</h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3: JOGO DE DESCOBRIR A PALAVRA -->
+    <section id="sec-jogo" class="section-panel">
+      <div class="game-card">
+        <div class="score-board">
+          <span>⭐ Pontos: <span id="score">0</span></span>
+          <span>🏆 Sequência: <span id="streak">0</span></span>
+        </div>
+
+        <h2 class="font-fun" style="color: var(--purple); font-size: 1.8rem;">Qual é o Substantivo?</h2>
+        <p>Observe a datilologia em Libras e escolha a palavra correta!</p>
+
+        <div class="word-challenge" id="wordChallenge"></div>
+
+        <div class="options-grid" id="optionsGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL DE DETALHES -->
+  <div class="modal" id="letterModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <h2 id="modalLetter" class="font-fun" style="font-size: 3rem; color: var(--purple);">A</h2>
+      <img id="modalImg" class="modal-img" src="" alt="Mão Libras">
+      <h3 id="modalWord" class="font-fun" style="color: var(--primary); font-size: 1.8rem;">SUBSTANTIVO</h3>
+      <p id="modalSpelling" style="margin-top: 10px; font-weight: 700; letter-spacing: 2px; color: #475569;"></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>Libras Kids — Material Pedagógico de Datilologia em Libras 🤟 | Desenvolvido para GitHub Pages</p>
+  </footer>
+
+  <script>
+    const BASE_REPO = "https://raw.githubusercontent.com/rwpo/Libras_Kids/main/assets/alfabeto/";
+
+    const ALFABETO_DATA = [
+      { char: 'A', word: 'ALUNO' },
+      { char: 'B', word: 'BRANCO' },
+      { char: 'C', word: 'COPO' },
+      { char: 'D', word: 'DOMINGO' },
+      { char: 'E', word: 'ÉTICA' },
+      { char: 'F', word: 'FRUTA' },
+      { char: 'G', word: 'GRAMÁTICA' },
+      { char: 'H', word: 'HISTÓRIA' },
+      { char: 'I', word: 'IMPORTANTE' },
+      { char: 'J', word: 'JULHO' },
+      { char: 'K', word: 'HUMANO' },
+      { char: 'L', word: 'TELEVISÃO' },
+      { char: 'M', word: 'MACARRÃO' },
+      { char: 'N', word: 'NATAL' },
+      { char: 'O', word: 'OUTUBRO' },
+      { char: 'P', word: 'PESSOA' },
+      { char: 'Q', word: 'GEOGRAFIA' },
+      { char: 'R', word: 'RESPEITO' },
+      { char: 'S', word: 'AMOR' },
+      { char: 'T', word: 'TEIMOSO' },
+      { char: 'U', word: 'USAR' },
+      { char: 'V', word: 'VERDURA' },
+      { char: 'W', word: 'GARFO' },
+      { char: 'X', word: 'PEIXE' },
+      { char: 'Y', word: 'AVISAR' },
+      { char: 'Z', word: 'RAIO' }
+    ];
+
+    function getImgUrl(char) {
+      const cleanChar = char.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+      return `${BASE_REPO}${cleanChar}.png`;
+    }
+
+    function handleImgError(imgElement, char) {
+      const cleanChar = char.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+      if (!imgElement.dataset.retried) {
+        imgElement.dataset.retried = "true";
+        imgElement.src = `${BASE_REPO}${cleanChar}.PNG`;
+      } else {
+        imgElement.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%238B5CF6" rx="15"/><text x="50" y="60" font-size="45" font-weight="bold" fill="white" text-anchor="middle">${cleanChar}</text></svg>`;
+      }
+    }
+
+    function switchTab(tabId, evt) {
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.section-panel').forEach(sec => sec.classList.remove('active'));
+      
+      if(evt && evt.currentTarget) {
+        evt.currentTarget.classList.add('active');
+      }
+      document.getElementById(`sec-${tabId}`).classList.add('active');
+
+      if(tabId === 'jogo') {
+        initGame();
+      }
+    }
+
+    function renderAlfabeto() {
+      const grid = document.getElementById('gridAlfabeto');
+      if(!grid) return;
+      grid.innerHTML = '';
+
+      ALFABETO_DATA.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card-letra';
+        card.onclick = () => openModal(item);
+
+        card.innerHTML = `
+          <span class="badge-letra">${item.char}</span>
+          <img src="${getImgUrl(item.char)}" alt="Libras ${item.char}" onerror="handleImgError(this, '${item.char}')">
+          <div class="substantivo">${item.word}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openModal(item) {
+      document.getElementById('modalLetter').innerText = item.char;
+      const img = document.getElementById('modalImg');
+      img.dataset.retried = "";
+      img.src = getImgUrl(item.char);
+      img.onerror = () => handleImgError(img, item.char);
+      document.getElementById('modalWord').innerText = item.word;
+      document.getElementById('modalSpelling').innerText = item.word.split('').join(' - ');
+      document.getElementById('letterModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('letterModal').style.display = 'none';
+    }
+
+    let currentWord = '';
+    let animInterval = null;
+
+    function renderDatilologia() {
+      const input = document.getElementById('inputText');
+      let text = input.value.trim().toUpperCase();
+      if(!text) return;
+
+      const cleanText = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      currentWord = cleanText;
+
+      const container = document.getElementById('handsContainer');
+      container.innerHTML = '';
+      
+      for(let char of cleanText) {
+        if(char >= 'A' && char <= 'Z') {
+          const item = document.createElement('div');
+          item.className = 'hand-item';
+          item.innerHTML = `
+            <img src="${getImgUrl(char)}" alt="${char}" onerror="handleImgError(this, '${char}')">
+            <span>${char}</span>
+          `;
+          container.appendChild(item);
+        }
+      }
+
+      document.getElementById('playerControls').style.display = 'flex';
+      document.getElementById('playerView').style.display = 'none';
+      container.style.display = 'flex';
+    }
+
+    function toggleViewMode() {
+      const hands = document.getElementById('handsContainer');
+      const player = document.getElementById('playerView');
+      if(hands.style.display === 'none') {
+        hands.style.display = 'flex';
+        player.style.display = 'none';
+        clearInterval(animInterval);
+      } else {
+        hands.style.display = 'none';
+        player.style.display = 'flex';
+        playAnimacion();
+      }
+    }
+
+    function playAnimacion() {
+      document.getElementById('handsContainer').style.display = 'none';
+      document.getElementById('playerView').style.display = 'flex';
+
+      let index = 0;
+      const img = document.getElementById('playerHandImg');
+      const label = document.getElementById('playerCharLabel');
+
+      clearInterval(animInterval);
+      
+      function showNext() {
+        if(index >= currentWord.length) {
+          index = 0;
+        }
+        const char = currentWord[index];
+        if(char >= 'A' && char <= 'Z') {
+          img.dataset.retried = "";
+          img.src = getImgUrl(char);
+          img.onerror = () => handleImgError(img, char);
+          label.innerText = char;
+        }
+        index++;
+      }
+
+      showNext();
+      animInterval = setInterval(showNext, 1200);
+    }
+
+    let score = 0;
+    let streak = 0;
+    let currentTargetWord = '';
+
+    function initGame() {
+      const randomItem = ALFABETO_DATA[Math.floor(Math.random() * ALFABETO_DATA.length)];
+      currentTargetWord = randomItem.word.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+
+      const challengeArea = document.getElementById('wordChallenge');
+      if(!challengeArea) return;
+      challengeArea.innerHTML = '';
+
+      for(let char of currentTargetWord) {
+        const slot = document.createElement('div');
+        slot.className = 'letter-slot';
+        slot.innerHTML = `<img src="${getImgUrl(char)}" alt="Slot" onerror="handleImgError(this, '${char}')">`;
+        challengeArea.appendChild(slot);
+      }
+
+      const options = [randomItem.word];
+      while(options.length < 4) {
+        const optionRand = ALFABETO_DATA[Math.floor(Math.random() * ALFABETO_DATA.length)].word;
+        if(!options.includes(optionRand)) {
+          options.push(optionRand);
+        }
+      }
+
+      options.sort(() => Math.random() - 0.5);
+
+      const optionsGrid = document.getElementById('optionsGrid');
+      optionsGrid.innerHTML = '';
+
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-option';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(opt, randomItem.word);
+        optionsGrid.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected, correct) {
+      if(selected === correct) {
+        score += 10;
+        streak += 1;
+        if(typeof confetti === 'function') {
+          confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 } });
+        }
+        document.getElementById('score').innerText = score;
+        document.getElementById('streak').innerText = streak;
+        setTimeout(initGame, 1000);
+      } else {
+        streak = 0;
+        document.getElementById('streak').innerText = streak;
+        alert(`Ops! A palavra correta era: ${correct}`);
+        initGame();
+      }
+    }
+
+    window.onload = function() {
+      renderAlfabeto();
+    };
+  </script>
+</body>
+</html>
