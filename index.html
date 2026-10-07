@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprenda Libras Brincando - Datilologia Infantil</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            purple: '#8B5CF6',
+                            pink: '#EC4899',
+                            yellow: '#F59E0B',
+                            green: '#10B981',
+                            blue: '#06B6D4',
+                            orange: '#F97316'
+                        }
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        nunito: ['Nunito', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #fce7f3 100%);
+            min-height: 100vh;
+        }
+        h1, h2, h3, .font-title {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .bubbly-button {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+        }
+        .bubbly-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 rgba(0, 0, 0, 0.12);
+        }
+        .bubbly-button:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
+        }
+        .card-3d {
+            transition: all 0.25s ease;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+        }
+        .card-3d:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.12);
+        }
+        .card-flip {
+            perspective: 1000px;
+        }
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .card-inner.flipped {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            backface-visibility: hidden;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+        @keyframes pulse-highlight {
+            0%, 100% { transform: scale(1); border-color: #8B5CF6; }
+            50% { transform: scale(1.15); border-color: #EC4899; box-shadow: 0 0 20px rgba(236,72,153,0.5); }
+        }
+        .highlight-letter {
+            animation: pulse-highlight 0.5s ease-in-out infinite;
+            z-index: 20;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8B5CF6;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen selection:bg-purple-200">
+
+    <!-- Header Principal -->
+    <header class="bg-white/90 backdrop-blur-md shadow-md sticky top-0 z-40 px-4 py-3 border-b-4 border-yellow-400">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-purple text-white p-2.5 rounded-2xl shadow-lg transform -rotate-3 hover:rotate-0 transition">
+                    <i class="fa-solid fa-hands-asl-interpreting text-3xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold text-brand-purple leading-tight flex items-center gap-2">
+                        Libras Kids
+                        <span class="text-xs font-semibold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full uppercase">Oficial GitHub</span>
+                    </h1>
+                    <p class="text-xs md:text-sm font-semibold text-slate-500">Aprenda o Alfabeto Manual com Imagens Oficiais</p>
+                </div>
+            </div>
+
+            <!-- Estrelas e Controles de Áudio -->
+            <div class="flex items-center gap-3">
+                <div class="bg-yellow-100 border-2 border-yellow-400 px-4 py-1.5 rounded-full flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-star text-yellow-500 text-xl animate-bounce"></i>
+                    <span id="score-display" class="font-title font-bold text-xl text-yellow-800">0</span>
+                    <span class="text-xs font-bold text-yellow-600 uppercase hidden sm:inline">pontos</span>
+                </div>
+                
+                <button id="btn-sound" onclick="toggleSound()" class="bg-slate-100 hover:bg-slate-200 p-2.5 rounded-full text-slate-700 transition" title="Alternar Som">
+                    <i id="sound-icon" class="fa-solid fa-volume-high text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-4 flex-grow w-full space-y-6">
+
+        <!-- Navegação de Modos/Abas -->
+        <nav class="flex flex-wrap justify-center gap-2 sm:gap-3 my-2">
+            <button onclick="switchTab('guia')" id="tab-guia" class="tab-btn bubbly-button bg-brand-purple text-white px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl font-title font-bold text-sm sm:text-base flex items-center gap-2">
+                <i class="fa-solid fa-book-open"></i> Alfabeto A-Z
+            </button>
+            <button onclick="switchTab('tradutor')" id="tab-tradutor" class="tab-btn bubbly-button bg-white text-slate-700 hover:bg-slate-100 px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl font-title font-bold text-sm sm:text-base flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-brand-pink"></i> Escreva &amp; Veja
+            </button>
+            <button onclick="switchTab('modo1')" id="tab-modo1" class="tab-btn bubbly-button bg-white text-slate-700 hover:bg-slate-100 px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl font-title font-bold text-sm sm:text-base flex items-center gap-2">
+                <i class="fa-solid fa-gamepad text-brand-blue"></i> Qual é a Palavra?
+            </button>
+            <button onclick="switchTab('modo4')" id="tab-modo4" class="tab-btn bubbly-button bg-white text-slate-700 hover:bg-slate-100 px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl font-title font-bold text-sm sm:text-base flex items-center gap-2">
+                <i class="fa-solid fa-puzzle-piece text-brand-green"></i> Jogo da Memória
+            </button>
+        </nav>
+
+        <!-- MODO 1: TABELA / GLOSSÁRIO DO ALFABETO -->
+        <section id="sec-guia" class="tab-content bg-white/85 backdrop-blur-md rounded-3xl p-5 sm:p-7 shadow-xl border-2 border-purple-100">
+            <div class="text-center mb-6 max-w-2xl mx-auto">
+                <h2 class="text-2xl sm:text-3xl font-title text-brand-purple mb-1">Alfabeto Manual em Libras</h2>
+                <p class="text-slate-600 text-sm sm:text-base">Imagens do repositório <strong class="text-purple-700">rwpo/Libras_Kids</strong>. Clique em qualquer carta para ampliar e ver um exemplo!</p>
+            </div>
+
+            <div id="alphabet-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-3 sm:gap-4">
+                <!-- Cards renderizados dinamicamente via JS -->
+            </div>
+        </section>
+
+        <!-- MODO 2: TRADUTOR / REPRESENTADOR EM DATILOLOGIA -->
+        <section id="sec-tradutor" class="tab-content hidden bg-white/85 backdrop-blur-md rounded-3xl p-5 sm:p-7 shadow-xl border-2 border-pink-100">
+            <div class="max-w-3xl mx-auto text-center space-y-6">
+                <div>
+                    <span class="bg-pink-100 text-pink-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Tradutor de Datilologia</span>
+                    <h2 class="text-2xl sm:text-3xl font-title text-brand-pink mt-1">Transforme qualquer palavra em Libras!</h2>
+                    <p class="text-slate-600 text-sm">Digite uma palavra infantil ou seu nome para ver a representação em sinais.</p>
+                </div>
+
+                <!-- Input da Palavra -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <input type="text" id="translator-input" value="LIBRAS" placeholder="Digite uma palavra..." max="15" class="w-full sm:w-80 px-5 py-3 rounded-2xl border-2 border-pink-300 text-center text-2xl font-title font-bold uppercase tracking-widest focus:border-brand-pink focus:ring-4 focus:ring-pink-100 focus:outline-none shadow-inner" oninput="updateTranslation()" autocomplete="off">
+                    
+                    <button onclick="playDatilologiaAnimation()" id="btn-play-animation" class="w-full sm:w-auto bubbly-button bg-brand-pink hover:bg-pink-600 text-white font-title font-bold px-6 py-3 rounded-2xl text-base flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play"></i> Tocar Datilologia
+                    </button>
+                </div>
+
+                <!-- Sugestões de Substantivos Rápidos -->
+                <div class="flex flex-wrap justify-center items-center gap-2 text-xs font-semibold text-slate-500">
+                    <span>Exemplos rápidos:</span>
+                    <button onclick="setTranslatorWord('BOLA')" class="bg-slate-100 hover:bg-pink-100 text-slate-700 hover:text-pink-700 px-3 py-1 rounded-full transition">BOLA</button>
+                    <button onclick="setTranslatorWord('GATO')" class="bg-slate-100 hover:bg-pink-100 text-slate-700 hover:text-pink-700 px-3 py-1 rounded-full transition">GATO</button>
+                    <button onclick="setTranslatorWord('ESCOLA')" class="bg-slate-100 hover:bg-pink-100 text-slate-700 hover:text-pink-700 px-3 py-1 rounded-full transition">ESCOLA</button>
+                    <button onclick="setTranslatorWord('AMIGO')" class="bg-slate-100 hover:bg-pink-100 text-slate-700 hover:text-pink-700 px-3 py-1 rounded-full transition">AMIGO</button>
+                    <button onclick="setTranslatorWord('AMOR')" class="bg-slate-100 hover:bg-pink-100 text-slate-700 hover:text-pink-700 px-3 py-1 rounded-full transition">AMOR</button>
+                </div>
+
+                <!-- Área de Exibição das Mãos Sequenciais -->
+                <div id="translator-cards-container" class="bg-slate-50/80 p-6 rounded-3xl border-2 border-dashed border-pink-200 flex flex-wrap justify-center gap-3 min-h-[160px] items-center transition-all">
+                    <!-- Gerado Dinamicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- MODO 3: JOGO DESCUBRA A PALAVRA -->
+        <section id="sec-modo1" class="tab-content hidden bg-white/85 backdrop-blur-md rounded-3xl p-5 sm:p-7 shadow-xl border-2 border-blue-100">
+            <div class="max-w-2xl mx-auto text-center space-y-6">
+                <div>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Jogo de Leitura</span>
+                    <h2 class="text-2xl sm:text-3xl font-title text-brand-blue mt-1">Que palavra é essa em Libras?</h2>
+                    <p class="text-slate-600 text-sm">Observe os sinais das mãos e adivinhe qual é o substantivo!</p>
+                </div>
+
+                <!-- Dica visual/ícone -->
+                <div class="flex items-center justify-center gap-2 bg-amber-50 border border-amber-200 text-amber-800 p-3 rounded-2xl">
+                    <i class="fa-solid fa-lightbulb text-yellow-500 text-xl"></i>
+                    <span class="font-semibold text-sm sm:text-base">Dica: <span id="m1-hint" class="font-bold text-amber-900">--</span></span>
+                </div>
+
+                <!-- Mãos em Libras da Palavra Desafio -->
+                <div id="m1-hands-container" class="bg-slate-50/80 p-5 rounded-3xl border-2 border-dashed border-blue-200 flex flex-wrap justify-center gap-3 min-h-[150px] items-center">
+                    <!-- Renderizado dinamicamente -->
+                </div>
+
+                <!-- Campo de Entrada e Validação -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <input type="text" id="m1-input" placeholder="Digite a palavra..." class="w-full sm:w-80 px-5 py-3 rounded-2xl border-2 border-slate-300 text-center text-xl font-title font-bold uppercase tracking-widest focus:border-brand-blue focus:outline-none shadow-inner" autocomplete="off" onkeyup="if(event.key==='Enter') checkMode1Answer()">
+                    <button onclick="checkMode1Answer()" class="w-full sm:w-auto bubbly-button bg-brand-blue hover:bg-blue-600 text-white font-title font-bold px-8 py-3 rounded-2xl text-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-check"></i> Responder
+                    </button>
+                </div>
+
+                <!-- Ajuda e Pular -->
+                <div class="flex justify-center items-center gap-4 text-sm">
+                    <button onclick="showMode1Help()" class="text-purple-600 hover:text-purple-800 font-bold underline flex items-center gap-1">
+                        <i class="fa-solid fa-circle-question"></i> Revelar Resposta
+                    </button>
+                    <span class="text-slate-300">|</span>
+                    <button onclick="nextMode1Word()" class="text-slate-500 hover:text-slate-700 font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-forward"></i> Próxima Palavra
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODO 4: JOGO DA MEMÓRIA EM LIBRAS -->
+        <section id="sec-modo4" class="tab-content hidden bg-white/85 backdrop-blur-md rounded-3xl p-5 sm:p-7 shadow-xl border-2 border-green-100">
+            <div class="max-w-4xl mx-auto text-center space-y-4">
+                <div>
+                    <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Desafio de Memória</span>
+                    <h2 class="text-2xl sm:text-3xl font-title text-brand-green mt-1">Jogo da Memória em Libras</h2>
+                    <p class="text-slate-600 text-sm">Combine a Letra com a sua respectiva Mão em Libras do repositório!</p>
+                </div>
+
+                <div class="flex justify-between items-center max-w-xs mx-auto bg-slate-100 px-4 py-2 rounded-2xl text-sm font-bold text-slate-600 shadow-inner">
+                    <span>Tentativas: <span id="m4-moves" class="text-brand-green text-lg">0</span></span>
+                    <button onclick="startMemoryGame()" class="bg-white hover:bg-slate-200 text-brand-green px-3 py-1 rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm transition">
+                        <i class="fa-solid fa-rotate-right"></i> Reiniciar
+                    </button>
+                </div>
+
+                <!-- Tabuleiro -->
+                <div id="memory-board" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 pt-2">
+                    <!-- Cartas geradas via JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Visualização Ampliada de Letra -->
+    <div id="letter-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl transform transition-all border-4 border-yellow-300 relative">
+            <button onclick="closeModal()" class="absolute top-3 right-3 text-slate-400 hover:text-slate-600 text-2xl p-1 rounded-full w-9 h-9 flex items-center justify-center bg-slate-100">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center justify-center gap-2">
+                <h3 id="modal-title" class="text-3xl font-title font-bold text-brand-purple">Letra A</h3>
+            </div>
+            
+            <!-- Imagem ampliada da Mão em Libras -->
+            <div class="w-48 h-48 mx-auto flex items-center justify-center bg-purple-50 rounded-2xl border-2 border-purple-100 p-2 relative shadow-inner">
+                <img id="modal-img" src="" alt="Letra em Libras" class="max-w-full max-h-full object-contain">
+                <div id="modal-fallback-svg" class="hidden w-full h-full"></div>
+            </div>
+
+            <!-- Exemplo de Substantivo com Imagem ou Ícone -->
+            <div class="bg-amber-50 rounded-2xl p-3 border border-amber-200 text-slate-700">
+                <p class="text-xs font-bold uppercase text-amber-600 tracking-wider">Exemplo de Substantivo:</p>
+                <p id="modal-example-word" class="text-xl font-title font-bold text-amber-900 mt-0.5">A de AVIONETA</p>
+            </div>
+
+            <button onclick="closeModal()" class="bubbly-button w-full bg-brand-purple hover:bg-purple-700 text-white font-title font-bold py-3 rounded-2xl text-lg">
+                Fechar
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white/60 border-t border-slate-200 mt-8 py-4 text-center text-xs text-slate-500">
+        <p>Desenvolvido para Aprendizado do Alfabeto Manual em Libras com Crianças ❤️</p>
+        <p class="mt-1">Imagens consumidas diretamente do GitHub: <a href="https://github.com/rwpo/Libras_Kids" target="_blank" class="underline font-bold text-purple-600">rwpo/Libras_Kids</a></p>
+    </footer>
+
+    <script>
+        /* CONFIGURAÇÃO DE IMAGENS DO REPOSITÓRIO GITHUB */
+        const GITHUB_BASE_JSDELIVR = "https://cdn.jsdelivr.net/gh/rwpo/Libras_Kids@main/assets/alfabeto/";
+        const GITHUB_BASE_RAW = "https://raw.githubusercontent.com/rwpo/Libras_Kids/main/assets/alfabeto/";
+
+        /* SVGs de Fallback de segurança para o caso de falha de conexão/offline */
+        const FALLBACK_SVGS = {
+            'A': `<svg viewBox="0 0 100 100" class="w-full h-full"><path d="M35 85 L35 45 C35 38 42 38 42 45 L42 85 Z" fill="#FFDBAC" stroke="#8D5524" stroke-width="3"/><path d="M42 85 L42 40 C42 33 49 33 49 40 L49 85 Z" fill="#FFDBAC" stroke="#8D5524" stroke-width="3"/><path d="M49 85 L49 42 C49 35 56 35 56 42 L56 85 Z" fill="#FFDBAC" stroke="#8D5524" stroke-width="3"/><path d="M56 85 L56 48 C56 41 63 41 63 48 L63 85 Z" fill="#FFDBAC" stroke="#8D5524" stroke-width="3"/><path d="M30 85 L70 85 L65 50 L35 50 Z" fill="#FFDBAC" stroke="#8D5524" stroke-width="3"/><path d="M30 65 C25 60 25 50 35 52 C40 53 45 58 40 68 Z" fill="#F1C27D" stroke="#8D5524" stroke-width="3"/><text x="50" y="96" text-anchor="middle" font-weight="bold" fill="#7C3AED" font-size="12">A</text></svg>`,
+            'B': `<svg viewBox="0 0 100 100" class="w-full h-full"><path d="M32 85 L32 25 C32 18 39 18 39 25 L39 85 Z" fill="#FFDBAC" stroke="#8D5524" stroke-width="3"/><path d="M39 85 L39 20 C39 13 46 13 46 20 L46 85 Z" fill="#FFDBAC" stroke="#8D5524" stroke-width="3"/><path d="M46 85 L46 22 C46 15 53 15 53 22 L53 85 Z" fill="#FFDBAC" stroke="#8D5524" stroke-width="3"/><path d="M53 85 L53 28 C53 21 60 21 60 28 L60 85 Z" fill="#FFDBAC" stroke="#8D5524" stroke-width="3"/><path d="M28 60 C38 60 48 65 45 75 C42 82 32 75 28 68 Z" fill="#F1C27D" stroke="#8D5524" stroke-width="3"/><text x="50" y="96" text-anchor="middle" font-weight="bold" fill="#7C3AED" font-size="12">B</text></svg>`,
+            'C': `<svg viewBox="0 0 100 100" class="w-full h-full"><path d="M65 30 C30 20 20 50 30 70 C40 85 65 80 70 70 C60 72 40 72 38 58 C36 44 55 38 65 42 Z" fill="#FFDBAC" stroke="#8D5524" stroke-width="3"/><text x="50" y="96" text-anchor="middle" font-weight="bold" fill="#7C3AED" font-size="12">C</text></svg>`
+        };
+
+        // Banco de Exemplo de Substantivos do Alfabeto
+        const ALPHABET_EXAMPLES = {
+            'A': 'AVIONETA / AVIAO', 'B': 'BOLA', 'C': 'CASA', 'D': 'DADO', 'E': 'ESCOLA',
+            'F': 'FLOR', 'G': 'GATO', 'H': 'HIPOPOTAMO', 'I': 'IGREJA', 'J': 'JANELA',
+            'K': 'KIWI', 'L': 'LIVRO', 'M': 'MACA', 'N': 'NAVIO', 'O': 'OVO',
+            'P': 'PATO', 'Q': 'QUEIJO', 'R': 'ROBO', 'S': 'SAPO', 'T': 'TREM',
+            'U': 'UVA', 'V': 'VACA', 'W': 'WAFFLE', 'X': 'XICARA', 'Y': 'YAKSOBA', 'Z': 'ZEBRA'
+        };
+
+        // Banco de Substantivos Infantis para os Jogos
+        const WORDS_DATABASE = [
+            { word: "BOLA", hint: "Objeto redondo muito usado em jogos de futebol", category: "Brinquedo" },
+            { word: "CASA", hint: "Lugar aconchegante onde moramos com a família", category: "Lugar" },
+            { word: "GATO", hint: "Animal de estimação carinhoso que faz 'miau'", category: "Animal" },
+            { word: "DADO", hint: "Objeto cúbico com números usado em jogos de tabuleiro", category: "Brinquedo" },
+            { word: "SOL", hint: "Aparece de dia no céu e ilumina a Terra", category: "Natureza" },
+            { word: "AMOR", hint: "Um sentimento muito bonito e carinhoso", category: "Sentimento" },
+            { word: "PEIXE", hint: "Animal que nada livremente nos rios e mares", category: "Animal" },
+            { word: "SAPO", hint: "Animal que pula perto da lagoa e faz 'croac'", category: "Animal" },
+            { word: "BOLO", hint: "Doce gostoso recheado que comemos em aniversários", category: "Comida" },
+            { word: "MACA", hint: "Fruta doce, suculenta e vermelha", category: "Comida" },
+            { word: "CARRO", hint: "Veículo de quatro rodas para passear", category: "Transporte" },
+            { word: "FLOR", hint: "Planta colorida e cheirosa do jardim", category: "Natureza" },
+            { word: "LIVRO", hint: "Objeto cheio de páginas com histórias e desenhos", category: "Escola" },
+            { word: "UVA", hint: "Fruta roxa ou verde que cresce em cachos", category: "Comida" }
+        ];
+
+        // Estado da Aplicação
+        let score = 0;
+        let soundEnabled = true;
+        let m1CurrentIndex = 0;
+        let isAnimationPlaying = false;
+
+        // Função de Tratamento de Imagens com Fallback Gracioso
+        function getImageUrl(letter) {
+            return `${GITHUB_BASE_JSDELIVR}${letter.toUpperCase()}.png`;
+        }
+
+        function handleImageError(imgEl, letter) {
+            // Tenta o link RAW se a CDN jsDelivr falhar
+            if (!imgEl.dataset.triedRaw) {
+                imgEl.dataset.triedRaw = "true";
+                imgEl.src = `${GITHUB_BASE_RAW}${letter.toUpperCase()}.png`;
+            } else {
+                // Caso ambos falhem, oculta a imagem e exibe o fallback visual
+                imgEl.classList.add('hidden');
+                const parent = imgEl.parentElement;
+                if (parent) {
+                    const fallback = parent.querySelector('.fallback-container');
+                    if (fallback) fallback.classList.remove('hidden');
+                }
+            }
+        }
+
+        // Web Audio API para efeitos sonoros
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new AudioCtx();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1);
+                    osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.2);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.linearRampToValueAtTime(130, now + 0.2);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(440, now);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                }
+            } catch(e) {}
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            if (soundEnabled) {
+                icon.className = 'fa-solid fa-volume-high text-xl';
+                playSound('click');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-xl text-red-500';
+            }
+        }
+
+        function addScore(points) {
+            score += points;
+            document.getElementById('score-display').innerText = score;
+            confetti({
+                particleCount: 60,
+                spread: 70,
+                origin: { y: 0.7 }
+            });
+        }
+
+        /* ---------------- MODO 1: GLOSSÁRIO A-Z ---------------- */
+        function initAlphabetGrid() {
+            const grid = document.getElementById('alphabet-grid');
+            grid.innerHTML = '';
+            
+            for (let charCode = 65; charCode <= 90; charCode++) {
+                const char = String.fromCharCode(charCode);
+                const imgUrl = getImageUrl(char);
+                const fallbackSvg = FALLBACK_SVGS[char] || `<div class="font-title text-4xl text-brand-purple font-bold">${char}</div>`;
+
+                const card = document.createElement('div');
+                card.className = 'card-3d bg-white rounded-2xl p-2.5 border-2 border-slate-100 hover:border-brand-purple cursor-pointer flex flex-col items-center justify-between relative group';
+                card.onclick = () => openModal(char);
+
+                card.innerHTML = `
+                    <div class="w-full aspect-square bg-purple-50/50 rounded-xl p-1.5 flex items-center justify-center relative overflow-hidden">
+                        <img src="${imgUrl}" alt="Libras ${char}" class="max-w-full max-h-full object-contain" onerror="handleImageError(this, '${char}')">
+                        <div class="fallback-container hidden w-full h-full flex items-center justify-center">${fallbackSvg}</div>
+                    </div>
+                    <span class="font-title font-bold text-xl text-slate-700 mt-1 group-hover:text-brand-purple transition">${char}</span>
+                `;
+                grid.appendChild(card);
+            }
+        }
+
+        function openModal(char) {
+            playSound('click');
+            document.getElementById('modal-title').innerText = `Letra ${char}`;
+            const imgEl = document.getElementById('modal-img');
+            const fallbackEl = document.getElementById('modal-fallback-svg');
+
+            imgEl.classList.remove('hidden');
+            imgEl.dataset.triedRaw = "";
+            imgEl.src = getImageUrl(char);
+            imgEl.onerror = () => handleImageError(imgEl, char);
+
+            fallbackEl.classList.add('hidden');
+            fallbackEl.innerHTML = FALLBACK_SVGS[char] || `<div class="font-title text-6xl text-brand-purple font-bold">${char}</div>`;
+
+            const example = ALPHABET_EXAMPLES[char] || `${char} em Libras`;
+            document.getElementById('modal-example-word').innerText = `${char} de ${example}`;
+
+            document.getElementById('letter-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            playSound('click');
+            document.getElementById('letter-modal').classList.add('hidden');
+        }
+
+        /* ---------------- MODO 2: TRADUTOR / DATILOLOGIA ---------------- */
+        function setTranslatorWord(word) {
+            document.getElementById('translator-input').value = word;
+            updateTranslation();
+        }
+
+        function updateTranslation() {
+            const input = document.getElementById('translator-input').value.toUpperCase().replace(/[^A-Z]/g, '');
+            const container = document.getElementById('translator-cards-container');
+            container.innerHTML = '';
+
+            if (!input) {
+                container.innerHTML = '<p class="text-slate-400 text-sm italic">Digite uma palavra acima para ver os sinais em Libras...</p>';
+                return;
+            }
+
+            for (let i = 0; i < input.length; i++) {
+                const char = input[i];
+                const imgUrl = getImageUrl(char);
+
+                const card = document.createElement('div');
+                card.id = `trans-card-${i}`;
+                card.className = 'w-16 h-20 sm:w-20 sm:h-24 bg-white rounded-2xl p-1.5 shadow border-2 border-pink-200 flex flex-col items-center justify-between transition-all transform';
+
+                card.innerHTML = `
+                    <div class="w-full h-12 sm:h-16 flex items-center justify-center relative overflow-hidden">
+                        <img src="${imgUrl}" alt="${char}" class="max-w-full max-h-full object-contain" onerror="handleImageError(this, '${char}')">
+                        <div class="fallback-container hidden font-title font-bold text-xl text-brand-pink">${char}</div>
+                    </div>
+                    <span class="font-title font-bold text-sm text-slate-700">${char}</span>
+                `;
+                container.appendChild(card);
+            }
+        }
+
+        async function playDatilologiaAnimation() {
+            if (isAnimationPlaying) return;
+            const input = document.getElementById('translator-input').value.toUpperCase().replace(/[^A-Z]/g, '');
+            if (!input) return;
+
+            isAnimationPlaying = true;
+            const btn = document.getElementById('btn-play-animation');
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
+
+            for (let i = 0; i < input.length; i++) {
+                const card = document.getElementById(`trans-card-${i}`);
+                if (card) {
+                    card.classList.add('highlight-letter');
+                    playSound('click');
+                    await new Promise(r => setTimeout(r, 700));
+                    card.classList.remove('highlight-letter');
+                }
+            }
+
+            isAnimationPlaying = false;
+            btn.disabled = false;
+            btn.classList.remove('opacity-50');
+        }
+
+        /* ---------------- MODO 3: JOGO DESCUBRA A PALAVRA ---------------- */
+        function loadMode1() {
+            const item = WORDS_DATABASE[m1CurrentIndex];
+            document.getElementById('m1-hint').innerText = `${item.hint} (${item.category})`;
+            document.getElementById('m1-input').value = '';
+
+            const container = document.getElementById('m1-hands-container');
+            container.innerHTML = '';
+
+            for (let char of item.word) {
+                const imgUrl = getImageUrl(char);
+                const handDiv = document.createElement('div');
+                handDiv.className = 'w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-2xl p-1.5 shadow border-2 border-blue-200 flex items-center justify-center relative overflow-hidden';
+                handDiv.innerHTML = `
+                    <img src="${imgUrl}" alt="Letra Secreta" class="max-w-full max-h-full object-contain" onerror="handleImageError(this, '${char}')">
+                    <div class="fallback-container hidden font-title font-bold text-xl text-brand-blue">${char}</div>
+                `;
+                container.appendChild(handDiv);
+            }
+        }
+
+        function checkMode1Answer() {
+            const input = document.getElementById('m1-input').value.trim().toUpperCase();
+            const target = WORDS_DATABASE[m1CurrentIndex].word;
+
+            if (input === target) {
+                playSound('correct');
+                addScore(10);
+                nextMode1Word();
+            } else {
+                playSound('wrong');
+                const inputEl = document.getElementById('m1-input');
+                inputEl.classList.add('border-red-500', 'animate-bounce');
+                setTimeout(() => inputEl.classList.remove('border-red-500', 'animate-bounce'), 600);
+            }
+        }
+
+        function showMode1Help() {
+            const target = WORDS_DATABASE[m1CurrentIndex].word;
+            document.getElementById('m1-input').value = target;
+        }
+
+        function nextMode1Word() {
+            m1CurrentIndex = (m1CurrentIndex + 1) % WORDS_DATABASE.length;
+            loadMode1();
+        }
+
+        /* ---------------- MODO 4: JOGO DA MEMÓRIA ---------------- */
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let memoryMoves = 0;
+
+        function startMemoryGame() {
+            memoryMoves = 0;
+            matchedPairs = 0;
+            document.getElementById('m4-moves').innerText = memoryMoves;
+            flippedCards = [];
+
+            const chars = ['A','B','C','D','E','F','G','H','I','J','L','M','N','O','P','Q','R','S','T','U','V'];
+            const selected = chars.sort(() => 0.5 - Math.random()).slice(0, 6);
+
+            let deck = [];
+            selected.forEach(char => {
+                deck.push({ type: 'text', val: char, id: char + '-txt' });
+                deck.push({ type: 'sign', val: char, id: char + '-sgn' });
+            });
+
+            deck.sort(() => 0.5 - Math.random());
+            memoryCards = deck;
+
+            const board = document.getElementById('memory-board');
+            board.innerHTML = '';
+
+            deck.forEach((card, idx) => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'card-flip h-28 sm:h-32 cursor-pointer';
+                cardEl.onclick = () => flipMemoryCard(idx);
+
+                const cardInner = document.createElement('div');
+                cardInner.className = `card-inner w-full h-full rounded-2xl shadow-md relative`;
+                cardInner.id = `card-inner-${idx}`;
+
+                // Frente (Invisível)
+                const front = document.createElement('div');
+                front.className = 'card-front absolute inset-0 bg-gradient-to-br from-brand-green to-teal-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold border-2 border-white shadow';
+                front.innerHTML = '<i class="fa-solid fa-hands-asl-interpreting text-white/80"></i>';
+
+                // Verso (Revelado)
+                const back = document.createElement('div');
+                back.className = 'card-back absolute inset-0 bg-white rounded-2xl flex flex-col items-center justify-center border-2 border-green-300 p-2 shadow';
+
+                if (card.type === 'text') {
+                    back.innerHTML = `<span class="text-4xl font-title font-bold text-brand-purple">${card.val}</span>`;
+                } else {
+                    const imgUrl = getImageUrl(card.val);
+                    back.innerHTML = `
+                        <div class="w-full h-full flex items-center justify-center relative overflow-hidden">
+                            <img src="${imgUrl}" alt="${card.val}" class="max-w-full max-h-full object-contain" onerror="handleImageError(this, '${card.val}')">
+                            <div class="fallback-container hidden font-title font-bold text-2xl text-brand-green">${card.val}</div>
+                        </div>
+                    `;
+                }
+
+                cardInner.appendChild(front);
+                cardInner.appendChild(back);
+                cardEl.appendChild(cardInner);
+                board.appendChild(cardEl);
+            });
+        }
+
+        function flipMemoryCard(idx) {
+            const inner = document.getElementById(`card-inner-${idx}`);
+            if (inner.classList.contains('flipped') || flippedCards.length >= 2) return;
+
+            playSound('click');
+            inner.classList.add('flipped');
+            flippedCards.push({ idx, card: memoryCards[idx], inner });
+
+            if (flippedCards.length === 2) {
+                memoryMoves++;
+                document.getElementById('m4-moves').innerText = memoryMoves;
+
+                const [c1, c2] = flippedCards;
+                if (c1.card.val === c2.card.val) {
+                    playSound('correct');
+                    matchedPairs++;
+                    flippedCards = [];
+
+                    if (matchedPairs === 6) {
+                        setTimeout(() => {
+                            addScore(20);
+                        }, 500);
+                    }
+                } else {
+                    playSound('wrong');
+                    setTimeout(() => {
+                        c1.inner.classList.remove('flipped');
+                        c2.inner.classList.remove('flipped');
+                        flippedCards = [];
+                    }, 1000);
+                }
+            }
+        }
+
+        /* ---------------- NAVEGAÇÃO DE ABAS ---------------- */
+        function switchTab(tab) {
+            playSound('click');
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-purple', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+
+            const selectedBtn = document.getElementById(`tab-${tab}`);
+            if (selectedBtn) {
+                selectedBtn.classList.remove('bg-white', 'text-slate-700');
+                selectedBtn.classList.add('bg-brand-purple', 'text-white');
+            }
+
+            document.getElementById(`sec-${tab}`).classList.remove('hidden');
+
+            if (tab === 'tradutor') updateTranslation();
+            if (tab === 'modo1') loadMode1();
+            if (tab === 'modo4') startMemoryGame();
+        }
+
+        window.onload = function() {
+            initAlphabetGrid();
+            updateTranslation();
+        };
+    </script>
+</body>
+</html>
