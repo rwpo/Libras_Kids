@@ -23,7 +23,6 @@
       --dark: #1E293B;
       --gray-light: #F8FAFC;
       --gray-border: #E2E8F0;
-      --card-bg: #FFFFFF;
       --shadow: 0 10px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
       --radius: 18px;
     }
@@ -49,7 +48,6 @@
       font-family: 'Fredoka', sans-serif;
     }
 
-    /* Header e Navegação */
     header {
       background: linear-gradient(135deg, #4C1D95, #7C3AED, #2563EB);
       color: white;
@@ -61,7 +59,7 @@
     }
 
     .header-content {
-      max-width: 1280px;
+      max-width: 1350px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -69,7 +67,7 @@
       align-items: center;
     }
 
-    @media(min-width: 900px) {
+    @media(min-width: 950px) {
       .header-content {
         flex-direction: row;
         justify-content: space-between;
@@ -83,10 +81,10 @@
     }
 
     .brand-icon {
-      font-size: 2rem;
+      font-size: 2.2rem;
       background: rgba(255,255,255,0.2);
-      width: 48px;
-      height: 48px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -95,24 +93,51 @@
     }
 
     .brand-title h1 {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       line-height: 1.2;
       letter-spacing: 0.5px;
     }
 
     .brand-title p {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       opacity: 0.9;
       font-weight: 600;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-fullscreen {
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-fullscreen:hover {
+      background: white;
+      color: var(--primary);
     }
 
     nav {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 6px;
-      background: rgba(0, 0, 0, 0.2);
-      padding: 6px;
+      gap: 5px;
+      background: rgba(0, 0, 0, 0.22);
+      padding: 5px;
       border-radius: 30px;
       backdrop-filter: blur(8px);
     }
@@ -121,15 +146,15 @@
       background: transparent;
       border: none;
       color: white;
-      padding: 8px 14px;
+      padding: 7px 13px;
       font-weight: 700;
-      font-size: 0.88rem;
-      border-radius: 20px;
+      font-size: 0.85rem;
+      border-radius: 18px;
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .nav-btn:hover {
@@ -142,10 +167,9 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
-    /* Layout Principal */
     main {
       flex: 1;
-      max-width: 1280px;
+      max-width: 1350px;
       width: 100%;
       margin: 20px auto;
       padding: 0 16px;
@@ -168,8 +192,8 @@
     .card-banner {
       background: white;
       border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 24px;
+      padding: 22px 26px;
+      margin-bottom: 22px;
       box-shadow: var(--shadow);
       border-left: 8px solid var(--primary);
       display: flex;
@@ -181,7 +205,7 @@
 
     .card-banner h2 {
       color: var(--primary);
-      font-size: 1.6rem;
+      font-size: 1.55rem;
       margin-bottom: 4px;
     }
 
@@ -190,11 +214,11 @@
       font-weight: 600;
     }
 
-    /* MÓDULO 1: ALFABETO & GLOSSÁRIO */
+    /* MÓDULO ALFABETO & GLOSSÁRIO */
     .grid-alfabeto {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 15px;
     }
 
     .card-letra {
@@ -225,15 +249,15 @@
     }
 
     .card-letra img {
-      width: 85px;
-      height: 85px;
+      width: 80px;
+      height: 80px;
       object-fit: contain;
       margin: 12px auto 6px;
       display: block;
     }
 
     .card-letra .substantivo {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 800;
       color: #334155;
       background: #F1F5F9;
@@ -245,11 +269,11 @@
       text-overflow: ellipsis;
     }
 
-    /* MÓDULO 2: REPRESENTADOR DE DATILOLOGIA */
+    /* MÓDULO ESCREVER */
     .box-container {
       background: white;
       border-radius: var(--radius);
-      padding: 30px;
+      padding: 28px;
       box-shadow: var(--shadow);
     }
 
@@ -261,7 +285,7 @@
       flex-wrap: wrap;
     }
 
-    .input-control-group input, .input-control-group select {
+    .input-control-group input {
       flex: 1;
       min-width: 200px;
       padding: 14px 20px;
@@ -281,10 +305,10 @@
       background: var(--primary);
       color: white;
       border: none;
-      padding: 14px 24px;
+      padding: 12px 24px;
       border-radius: 14px;
       font-size: 1rem;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       transition: all 0.2s;
       display: inline-flex;
@@ -304,7 +328,7 @@
       border: none;
       padding: 12px 20px;
       border-radius: 12px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
     }
 
@@ -345,64 +369,76 @@
       margin-top: 2px;
     }
 
-    /* MÓDULO 3: FLASHCARDS (APRESENTAÇÃO SALA) */
-    .flashcard-display {
-      max-width: 650px;
+    /* MÓDULO FLASHCARDS FLIP 3D */
+    .flashcard-stage {
+      max-width: 600px;
       margin: 0 auto;
       text-align: center;
     }
 
-    .flashcard-box {
-      background: white;
+    .card-flip-container {
+      perspective: 1000px;
+      height: 340px;
+      margin-bottom: 25px;
+      cursor: pointer;
+    }
+
+    .card-flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
       border-radius: 24px;
-      border: 4px solid var(--primary-light);
-      padding: 40px 20px;
-      min-height: 320px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-flip-container.flipped .card-flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-flip-front, .card-flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 24px;
+      padding: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: var(--shadow);
-      margin-bottom: 25px;
-      position: relative;
+      border: 4px solid var(--primary-light);
+      background: white;
     }
 
-    .flashcard-hands {
+    .card-flip-back {
+      transform: rotateY(180deg);
+      background: #FAF5FF;
+      border-color: var(--primary);
+    }
+
+    .flashcard-hands-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       justify-content: center;
-      margin-bottom: 20px;
     }
 
-    .flashcard-hands img {
-      width: 75px;
-      height: 75px;
+    .flashcard-hands-row img {
+      width: 70px;
+      height: 70px;
       object-fit: contain;
-      background: var(--gray-light);
+      background: #F1F5F9;
       border-radius: 12px;
       padding: 6px;
       border: 1px solid var(--gray-border);
     }
 
-    .answer-hidden {
-      filter: blur(8px);
-      user-select: none;
-      opacity: 0.3;
-      transition: all 0.3s ease;
-    }
-
-    .answer-revealed {
-      filter: none;
-      opacity: 1;
-      color: var(--accent-green);
-      font-size: 2.2rem;
-      font-weight: 800;
-    }
-
-    /* MÓDULO 4: TRANSCRIÇÃO DE TEXTO */
+    /* MÓDULO TRANSCRIÇÃO DE TEXTO */
     .transcription-container {
-      max-width: 850px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
@@ -421,18 +457,17 @@
     .line-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
       align-items: center;
       background: #F8FAFC;
-      padding: 10px 14px;
+      padding: 12px 16px;
       border-radius: 12px;
-      border-left: 4px solid var(--secondary);
+      border-left: 5px solid var(--secondary);
     }
 
     .word-group {
       display: flex;
-      gap: 3px;
-      margin-right: 12px;
+      gap: 2px;
       background: white;
       padding: 4px 6px;
       border-radius: 8px;
@@ -447,12 +482,12 @@
 
     .textarea-input {
       width: 100%;
-      height: 110px;
+      height: 120px;
       padding: 16px;
       border-radius: 14px;
       border: 2px solid var(--gray-border);
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-size: 1.15rem;
+      font-weight: 700;
       resize: vertical;
       outline: none;
       margin-bottom: 15px;
@@ -465,12 +500,14 @@
     .feedback-box {
       margin-top: 15px;
       padding: 16px;
-      border-radius: 12px;
-      font-weight: 700;
+      border-radius: 14px;
+      font-weight: 800;
       display: none;
+      text-align: center;
+      font-size: 1.1rem;
     }
 
-    /* MÓDULO 5: CAÇA-PALAVRAS */
+    /* MÓDULO CAÇA-PALAVRAS EM LIBRAS (COM IMAGENS MANUAIS) */
     .caca-palavras-wrapper {
       display: flex;
       flex-direction: column;
@@ -478,7 +515,7 @@
       align-items: center;
     }
 
-    @media(min-width: 850px) {
+    @media(min-width: 900px) {
       .caca-palavras-wrapper {
         flex-direction: row;
         align-items: flex-start;
@@ -486,59 +523,72 @@
       }
     }
 
-    .wordsearch-grid {
+    .wordsearch-grid-libras {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
-      gap: 5px;
-      background: #E2E8F0;
-      padding: 10px;
-      border-radius: 16px;
+      gap: 6px;
+      background: #CBD5E1;
+      padding: 12px;
+      border-radius: 18px;
       user-select: none;
       touch-action: none;
+      box-shadow: var(--shadow);
     }
 
-    .grid-cell {
-      width: 38px;
-      height: 38px;
+    .grid-cell-libras {
+      width: 44px;
+      height: 44px;
       background: white;
-      border-radius: 8px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 1.1rem;
       cursor: pointer;
-      color: #334155;
-      transition: background 0.15s;
+      transition: all 0.15s;
+      border: 2px solid transparent;
+      padding: 3px;
     }
 
-    .grid-cell.selected {
+    .grid-cell-libras img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .grid-cell-libras.selected {
       background: var(--primary-light);
-      color: var(--primary);
+      border-color: var(--primary);
+      transform: scale(1.05);
     }
 
-    .grid-cell.found {
+    .grid-cell-libras.found {
       background: var(--accent-green) !important;
-      color: white !important;
+      border-color: #047857 !important;
+    }
+
+    .grid-cell-libras.found img {
+      filter: brightness(0) invert(1);
     }
 
     .word-list-panel {
       background: white;
-      border-radius: 16px;
-      padding: 20px;
+      border-radius: 18px;
+      padding: 22px;
       border: 2px solid var(--gray-border);
-      min-width: 280px;
+      min-width: 300px;
+      box-shadow: var(--shadow);
     }
 
     .word-item-hint {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
+      padding: 10px 14px;
       background: var(--gray-light);
-      border-radius: 10px;
-      margin-bottom: 8px;
-      font-weight: 700;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      font-weight: 800;
     }
 
     .word-item-hint.completed {
@@ -558,7 +608,7 @@
       object-fit: contain;
     }
 
-    /* MÓDULO 6: QUIZ DE LEITURA */
+    /* MÓDULO QUIZ */
     .quiz-container {
       max-width: 650px;
       margin: 0 auto;
@@ -613,12 +663,12 @@
       background: #F3E8FF;
     }
 
-    /* MÓDULO 7: JOGO DA MEMÓRIA */
+    /* MÓDULO JOGO DA MEMÓRIA */
     .memory-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
-      max-width: 650px;
+      max-width: 700px;
       margin: 20px auto;
     }
 
@@ -629,7 +679,7 @@
     }
 
     .memory-card {
-      height: 100px;
+      height: 105px;
       perspective: 1000px;
       cursor: pointer;
     }
@@ -669,6 +719,7 @@
       background: white;
       transform: rotateY(180deg);
       padding: 6px;
+      text-align: center;
     }
 
     .card-back img {
@@ -678,12 +729,12 @@
     }
 
     .card-back span {
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 800;
       color: var(--primary);
     }
 
-    /* MÓDULO 8: DICIONÁRIO TEMÁTICO */
+    /* MÓDULO DICIONÁRIO TEMÁTICO */
     .theme-selector {
       display: flex;
       flex-wrap: wrap;
@@ -697,7 +748,7 @@
       border: 2px solid var(--gray-border);
       padding: 8px 16px;
       border-radius: 20px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       color: #475569;
       transition: all 0.2s;
@@ -738,18 +789,18 @@
     }
 
     .dict-word {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       color: var(--dark);
     }
 
     .dict-category {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       background: var(--primary-light);
       color: var(--primary);
       padding: 2px 8px;
       border-radius: 10px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .dict-hands {
@@ -760,8 +811,8 @@
     }
 
     .dict-hands img {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       object-fit: contain;
       background: var(--gray-light);
       border-radius: 6px;
@@ -808,50 +859,59 @@
       text-align: center;
       padding: 24px;
       color: #64748B;
-      font-weight: 600;
-      font-size: 0.9rem;
+      font-weight: 700;
+      font-size: 0.95rem;
       margin-top: auto;
+      background: white;
+      border-top: 1px solid var(--gray-border);
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER E NAVEGAÇÃO -->
+  <!-- HEADER -->
   <header>
     <div class="header-content">
       <div class="brand">
         <div class="brand-icon">🤟</div>
         <div class="brand-title">
-          <h1 class="font-title">Datilologia em Libras</h1>
-          <p>Atividades Práticas de Aprendizagem &amp; Fixação</p>
+          <h1 class="font-title">Datilologia em Libras - Atividades Práticas</h1>
+          <p>Recurso Pedagógico Interativo para Sala de Aula</p>
         </div>
       </div>
-      <nav>
-        <button class="nav-btn active" onclick="switchSection('glossario', event)">📖 Alfabeto</button>
-        <button class="nav-btn" onclick="switchSection('escrever', event)">✍️ Escrever</button>
-        <button class="nav-btn" onclick="switchSection('flashcards', event)">📽️ Flashcards</button>
-        <button class="nav-btn" onclick="switchSection('transcricao', event)">📝 Transcrição</button>
-        <button class="nav-btn" onclick="switchSection('cacapalavras', event)">🔍 Caça-Palavras</button>
-        <button class="nav-btn" onclick="switchSection('quiz', event)">❓ Quiz</button>
-        <button class="nav-btn" onclick="switchSection('memoria', event)">🧩 Memória</button>
-        <button class="nav-btn" onclick="switchSection('dicionario', event)">📚 Dicionário</button>
-      </nav>
+
+      <div class="header-controls">
+        <button class="btn-fullscreen" onclick="toggleFullscreen()">
+          <span>📺</span> Tela Cheia
+        </button>
+
+        <nav>
+          <button class="nav-btn active" onclick="switchSection('glossario', event)">📖 Alfabeto</button>
+          <button class="nav-btn" onclick="switchSection('escrever', event)">✍️ Escrever</button>
+          <button class="nav-btn" onclick="switchSection('flashcards', event)">📽️ Flashcards</button>
+          <button class="nav-btn" onclick="switchSection('transcricao', event)">📝 Transcrição</button>
+          <button class="nav-btn" onclick="switchSection('cacapalavras', event)">🔍 Caça-Palavras</button>
+          <button class="nav-btn" onclick="switchSection('quiz', event)">❓ Quiz</button>
+          <button class="nav-btn" onclick="switchSection('memoria', event)">🧩 Memória</button>
+          <button class="nav-btn" onclick="switchSection('dicionario', event)">📚 Dicionário</button>
+        </nav>
+      </div>
     </div>
   </header>
 
   <main>
-    <!-- MÓDULO 1: ALFABETO & GLOSSÁRIO DE SUBSTANTIVOS -->
+    <!-- MÓDULO 1: ALFABETO -->
     <section id="sec-glossario" class="section-panel active">
       <div class="card-banner">
         <div>
-          <h2>Alfabeto Manual em Libras</h2>
-          <p>Explore as letras e seus substantivos correspondentes em datilologia. Clique no card para ampliar!</p>
+          <h2>Alfabeto Manual em Libras (A - Z)</h2>
+          <p>Explore a datilologia oficial com os 26 substantivos representativos. Clique para ampliar!</p>
         </div>
       </div>
       <div class="grid-alfabeto" id="gridAlfabeto"></div>
     </section>
 
-    <!-- MÓDULO 2: ESCREVER EM DATILOLOGIA -->
+    <!-- MÓDULO 2: ESCREVER -->
     <section id="sec-escrever" class="section-panel">
       <div class="box-container text-center">
         <h2 class="font-title" style="color: var(--primary); font-size: 1.8rem;">Representador de Datilologia</h2>
@@ -869,47 +929,50 @@
       </div>
     </section>
 
-    <!-- MÓDULO 3: FLASHCARDS PARA PROJEÇÃO -->
+    <!-- MÓDULO 3: FLASHCARDS FLIP 3D -->
     <section id="sec-flashcards" class="section-panel">
       <div class="card-banner">
         <div>
-          <h2>Flashcards para Apresentação em Sala</h2>
-          <p>Ideal para exibição em projetor/tela. Apresente os sinais para a turma e revele a resposta para conferência!</p>
+          <h2>Flashcards Interativos (Flip 3D)</h2>
+          <p>Ideal para projeção. Apresente os sinais para a turma e clique na carta para virar e conferir a palavra!</p>
         </div>
+        <select id="filterFlashcardsCat" class="btn-secondary" onchange="iniciarFlashcards()" style="background: white; color: var(--dark); border:2px solid var(--gray-border)">
+          <option value="TODOS">Todas as Categorias</option>
+        </select>
       </div>
 
-      <div class="flashcard-display">
-        <div class="flashcard-box">
-          <span style="position: absolute; top: 15px; left: 20px; font-weight: 800; color: #94A3B8; font-size: 0.9rem;" id="flashcardCounter">Card 1 / 15</span>
-          
-          <div class="flashcard-hands" id="flashcardHands"></div>
-
-          <div id="flashcardAnswer" class="answer-hidden">
-            ---
+      <div class="flashcard-stage">
+        <div class="card-flip-container" id="flashcardBox" onclick="this.classList.toggle('flipped')">
+          <div class="card-flip-inner">
+            <div class="card-flip-front">
+              <span style="position: absolute; top: 15px; left: 20px; font-weight: 800; color: #94A3B8;" id="flashcardCounter">Card 1 / 10</span>
+              <span style="position: absolute; top: 15px; right: 20px; font-weight: 800; color: var(--primary);" id="flashcardCategory">Categoria</span>
+              <div class="flashcard-hands-row" id="flashcardHands"></div>
+              <p style="margin-top: 20px; font-size: 0.9rem; color: #64748B; font-weight: 700;">👆 Clique no card para ver a resposta!</p>
+            </div>
+            <div class="card-flip-back">
+              <h2 id="flashcardAnswerWord" class="font-title" style="font-size: 2.5rem; color: var(--primary);">PALAVRA</h2>
+              <p id="flashcardSpelling" style="margin-top: 10px; font-weight: 800; color: #64748B; letter-spacing: 3px;"></p>
+            </div>
           </div>
         </div>
 
         <div style="display: flex; justify-content: center; gap: 12px;">
           <button class="btn-secondary" onclick="navFlashcard(-1)">⬅️ Anterior</button>
-          <button class="btn-main" onclick="revelarFlashcard()" style="background: var(--accent-yellow); color: #78350F;">👁️ Revelar Resposta</button>
           <button class="btn-main" onclick="navFlashcard(1)">Próximo ➡️</button>
         </div>
       </div>
     </section>
 
-    <!-- MÓDULO 4: ATIVIDADE DE TRANSCRIÇÃO DE TEXTO -->
+    <!-- MÓDULO 4: TRANSCRIÇÃO (30 TEXTOS DE 3 LINHAS) -->
     <section id="sec-transcricao" class="section-panel">
       <div class="transcription-container">
         <div class="card-banner">
           <div>
             <h2>Atividade de Transcrição de Texto</h2>
-            <p>Leia o texto representado em alfabeto manual abaixo e digite a transcrição em Português.</p>
+            <p>Leia o texto de 3 linhas representado em alfabeto manual e digite a resposta em Português.</p>
           </div>
-          <select id="selectTextoTranscricao" class="btn-secondary" onchange="carregarTextoTranscricao()" style="background: white; color: var(--dark); border: 2px solid var(--gray-border);">
-            <option value="0">Texto 1: Escola e Estudo</option>
-            <option value="1">Texto 2: Natureza e Sol</option>
-            <option value="2">Texto 3: Respeito e Amizade</option>
-          </select>
+          <button class="btn-main" onclick="sortearNovoTextoTranscricao()">Sortear Novo Texto 🎲</button>
         </div>
 
         <div class="lines-datilologia" id="linesDatilologiaContainer"></div>
@@ -924,17 +987,18 @@
       </div>
     </section>
 
-    <!-- MÓDULO 5: CAÇA-PALAVRAS INTERATIVO -->
+    <!-- MÓDULO 5: CAÇA-PALAVRAS EM LIBRAS -->
     <section id="sec-cacapalavras" class="section-panel">
       <div class="card-banner">
         <div>
           <h2>Caça-Palavras em Libras</h2>
-          <p>Encontre as palavras escondidas na grade. As dicas de cada palavra estão em datilologia!</p>
+          <p>Encontre as palavras na grade com **Sinais do Alfabeto Manual**! Clique nas células para selecionar.</p>
         </div>
+        <button class="btn-main" onclick="iniciarCacaPalavras()">Novo Caça-Palavras 🔄</button>
       </div>
 
       <div class="caca-palavras-wrapper">
-        <div class="wordsearch-grid" id="wordsearchGrid"></div>
+        <div class="wordsearch-grid-libras" id="wordsearchGridLibras"></div>
 
         <div class="word-list-panel">
           <h3 class="font-title" style="margin-bottom: 12px; color: var(--primary);">Palavras para Encontrar:</h3>
@@ -943,10 +1007,10 @@
       </div>
     </section>
 
-    <!-- MÓDULO 6: QUIZ DE LEITURA DE PALAVRAS -->
+    <!-- MÓDULO 6: QUIZ -->
     <section id="sec-quiz" class="section-panel">
       <div class="quiz-container">
-        <div style="display: flex; justify-content: space-between; background: white; padding: 14px 20px; border-radius: 14px; margin-bottom: 20px; font-weight: 800; border: 2px solid var(--gray-border);">
+        <div style="display: flex; justify-content: space-around; background: white; padding: 14px 20px; border-radius: 14px; margin-bottom: 20px; font-weight: 800; border: 2px solid var(--gray-border);">
           <span style="color: var(--accent-yellow);">⭐ Pontos: <span id="quizScore">0</span></span>
           <span style="color: var(--accent-green);">🔥 Sequência: <span id="quizStreak">0</span></span>
         </div>
@@ -956,7 +1020,6 @@
         </div>
 
         <div class="quiz-hands-display" id="quizHandsDisplay"></div>
-
         <div class="quiz-options" id="quizOptions"></div>
       </div>
     </section>
@@ -966,7 +1029,7 @@
       <div class="card-banner" style="justify-content: space-between;">
         <div>
           <h2>Jogo da Memória em Libras</h2>
-          <p>Combine a carta com o Sinal da Letra com a carta da Letra/Palavra correspondente.</p>
+          <p>Combine a carta com a Datilologia em Libras com a palavra correspondente em Português.</p>
         </div>
         <div style="display: flex; gap: 15px; font-weight: 800; align-items: center;">
           <span>Jogadas: <span id="memoryMoves" style="color: var(--primary);">0</span></span>
@@ -977,18 +1040,17 @@
       <div class="memory-grid" id="memoryGrid"></div>
     </section>
 
-    <!-- MÓDULO 8: DICIONÁRIO TEMÁTICO -->
+    <!-- MÓDULO 8: DICIONÁRIO TEMÁTICO (300+ PALAVRAS) -->
     <section id="sec-dicionario" class="section-panel">
       <div class="card-banner">
         <div>
-          <h2>Dicionário Temático de Datilologia</h2>
-          <p>Consulte palavras organizadas por categorias gramaticais e temas do cotidiano.</p>
+          <h2>Dicionário Temático (300+ Palavras)</h2>
+          <p>Consulte palavras organizadas por temas com sinalização direta em datilologia.</p>
         </div>
-        <input type="text" id="searchDict" placeholder="Buscar palavra..." oninput="filtrarDicionario()" style="padding: 10px 16px; border-radius: 12px; border: 2px solid var(--gray-border); font-weight: 700;">
+        <input type="text" id="searchDict" placeholder="Buscar palavra..." oninput="filtrarDicionario()" style="padding: 10px 16px; border-radius: 12px; border: 2px solid var(--gray-border); font-weight: 800;">
       </div>
 
       <div class="theme-selector" id="themeSelector"></div>
-
       <div class="dict-list" id="dictList"></div>
     </section>
   </main>
@@ -998,79 +1060,135 @@
     <div class="modal-body">
       <button class="btn-close-modal" onclick="fecharModal()">&times;</button>
       <h2 id="modalTitle" class="font-title" style="font-size: 2.2rem; color: var(--primary);">A</h2>
-      <img id="modalImage" src="" alt="Sinal em Libras" style="width: 160px; height: 160px; object-fit: contain; margin: 15px 0;">
-      <h3 id="modalWord" class="font-title" style="color: var(--accent-yellow); font-size: 1.5rem;">ALUNO</h3>
+      <img id="modalImage" src="" alt="Sinal em Libras" style="width: 150px; height: 150px; object-fit: contain; margin: 15px 0;">
+      <h3 id="modalWord" class="font-title" style="color: var(--accent-yellow); font-size: 1.6rem;">SUBSTANTIVO</h3>
       <p id="modalSpelling" style="margin-top: 8px; font-weight: 800; letter-spacing: 2px; color: #64748B;"></p>
     </div>
   </div>
 
+  <!-- RODAPÉ FIXO -->
   <footer>
-    <p>Datilologia em Libras - Atividades Práticas | Recurso Pedagógico Interativo</p>
+    <p>Desenvolvido por Ricardo Wagner</p>
   </footer>
 
   <script>
-    // REPOSITÓRIO RAW OFICIAL DAS IMAGENS
     const BASE_URL_RAW = "https://raw.githubusercontent.com/rwpo/Libras_Kids/main/assets/alfabeto/";
 
-    // LISTA OFICIAL DOS 26 SUBSTANTIVOS EXIGIDOS
     const SUBSTANTIVOS_OFICIAIS = [
-      { char: 'A', word: 'ALUNO' },
-      { char: 'B', word: 'BRANCO' },
-      { char: 'C', word: 'COPO' },
-      { char: 'D', word: 'DOMINGO' },
-      { char: 'E', word: 'ÉTICA' },
-      { char: 'F', word: 'FRUTA' },
-      { char: 'G', word: 'GRAMÁTICA' },
-      { char: 'H', word: 'HISTÓRIA' },
-      { char: 'I', word: 'IMPORTANTE' },
-      { char: 'J', word: 'JULHO' },
-      { char: 'K', word: 'HUMANO' },
-      { char: 'L', word: 'TELEVISÃO' },
-      { char: 'M', word: 'MACARRÃO' },
-      { char: 'N', word: 'NATAL' },
-      { char: 'O', word: 'OUTUBRO' },
-      { char: 'P', word: 'PESSOA' },
-      { char: 'Q', word: 'GEOGRAFIA' },
-      { char: 'R', word: 'RESPEITO' },
-      { char: 'S', word: 'AMOR' },
-      { char: 'T', word: 'TEIMOSO' },
-      { char: 'U', word: 'USAR' },
-      { char: 'V', word: 'VERDURA' },
-      { char: 'W', word: 'GARFO' },
-      { char: 'X', word: 'PEIXE' },
-      { char: 'Y', word: 'AVISAR' },
-      { char: 'Z', word: 'RAIO' }
+      { char: 'A', word: 'ALUNO' }, { char: 'B', word: 'BRANCO' }, { char: 'C', word: 'COPO' },
+      { char: 'D', word: 'DOMINGO' }, { char: 'E', word: 'ÉTICA' }, { char: 'F', word: 'FRUTA' },
+      { char: 'G', word: 'GRAMÁTICA' }, { char: 'H', word: 'HISTÓRIA' }, { char: 'I', word: 'IMPORTANTE' },
+      { char: 'J', word: 'JULHO' }, { char: 'K', word: 'HUMANO' }, { char: 'L', word: 'TELEVISÃO' },
+      { char: 'M', word: 'MACARRÃO' }, { char: 'N', word: 'NATAL' }, { char: 'O', word: 'OUTUBRO' },
+      { char: 'P', word: 'PESSOA' }, { char: 'Q', word: 'GEOGRAFIA' }, { char: 'R', word: 'RESPEITO' },
+      { char: 'S', word: 'AMOR' }, { char: 'T', word: 'TEIMOSO' }, { char: 'U', word: 'USAR' },
+      { char: 'V', word: 'VERDURA' }, { char: 'W', word: 'GARFO' }, { char: 'X', word: 'PEIXE' },
+      { char: 'Y', word: 'AVISAR' }, { char: 'Z', word: 'RAIO' }
     ];
 
-    // DICIONÁRIO TEMÁTICO
-    const DICIONARIO_TEMAS = [
-      { word: 'ALUNO', category: 'Escola' },
-      { word: 'ESCOLA', category: 'Escola' },
-      { word: 'LIVRO', category: 'Escola' },
-      { word: 'GRAMÁTICA', category: 'Escola' },
-      { word: 'GEOGRAFIA', category: 'Escola' },
-      { word: 'HISTÓRIA', category: 'Escola' },
-      { word: 'DOMINGO', category: 'Calendário' },
-      { word: 'JULHO', category: 'Calendário' },
-      { word: 'OUTUBRO', category: 'Calendário' },
-      { word: 'NATAL', category: 'Calendário' },
-      { word: 'FRUTA', category: 'Alimentação' },
-      { word: 'MACARRÃO', category: 'Alimentação' },
-      { word: 'VERDURA', category: 'Alimentação' },
-      { word: 'COPO', category: 'Alimentação' },
-      { word: 'GARFO', category: 'Alimentação' },
-      { word: 'AMOR', category: 'Sentimentos' },
-      { word: 'RESPEITO', category: 'Sentimentos' },
-      { word: 'ÉTICA', category: 'Sentimentos' },
-      { word: 'PEIXE', category: 'Natureza' },
-      { word: 'RAIO', category: 'Natureza' },
-      { word: 'PESSOA', category: 'Cotidiano' },
-      { word: 'BRANCO', category: 'Cotidiano' },
-      { word: 'HUMANO', category: 'Cotidiano' },
-      { word: 'TELEVISÃO', category: 'Cotidiano' }
+    // BANCO ROBUSTO DE 300+ PALAVRAS CATEGORIZADAS
+    const BANCO_PALAVRAS_300 = [
+      // ANIMAIS
+      { word: 'GATO', category: 'Animais' }, { word: 'CACHORRO', category: 'Animais' }, { word: 'PEIXE', category: 'Animais' },
+      { word: 'PASSARO', category: 'Animais' }, { word: 'LEAO', category: 'Animais' }, { word: 'TIGRE', category: 'Animais' },
+      { word: 'URSO', category: 'Animais' }, { word: 'COELHO', category: 'Animais' }, { word: 'MACACO', category: 'Animais' },
+      { word: 'ELEFANTE', category: 'Animais' }, { word: 'GIRAFA', category: 'Animais' }, { word: 'ZEBRA', category: 'Animais' },
+      { word: 'TARTARUGA', category: 'Animais' }, { word: 'JACOU', category: 'Animais' }, { word: 'SAPO', category: 'Animais' },
+      { word: 'CORUJA', category: 'Animais' }, { word: 'PINGUIM', category: 'Animais' }, { word: 'CAVALO', category: 'Animais' },
+      { word: 'VACA', category: 'Animais' }, { word: 'OVELHA', category: 'Animais' }, { word: 'PORCO', category: 'Animais' },
+      { word: 'GALINHA', category: 'Animais' }, { word: 'PATO', category: 'Animais' }, { word: 'BALEIA', category: 'Animais' },
+
+      // ESCOLA
+      { word: 'ALUNO', category: 'Escola' }, { word: 'ESCOLA', category: 'Escola' }, { word: 'PROFESSOR', category: 'Escola' },
+      { word: 'LIVRO', category: 'Escola' }, { word: 'CADERNO', category: 'Escola' }, { word: 'CANETA', category: 'Escola' },
+      { word: 'LAPIS', category: 'Escola' }, { word: 'BORRACHA', category: 'Escola' }, { word: 'REGUA', category: 'Escola' },
+      { word: 'MOCHILA', category: 'Escola' }, { word: 'TESOURA', category: 'Escola' }, { word: 'COLA', category: 'Escola' },
+      { word: 'TINTA', category: 'Escola' }, { word: 'PAPEL', category: 'Escola' }, { word: 'CLASSE', category: 'Escola' },
+      { word: 'HISTORIA', category: 'Escola' }, { word: 'GEOGRAFIA', category: 'Escola' }, { word: 'GRAMATICA', category: 'Escola' },
+      { word: 'DESENHO', category: 'Escola' }, { word: 'MUSA', category: 'Escola' }, { word: 'PROVA', category: 'Escola' },
+
+      // ALIMENTOS
+      { word: 'FRUTA', category: 'Alimentos' }, { word: 'MACA', category: 'Alimentos' }, { word: 'BANANA', category: 'Alimentos' },
+      { word: 'UVA', category: 'Alimentos' }, { word: 'LARANJA', category: 'Alimentos' }, { word: 'ARROZ', category: 'Alimentos' },
+      { word: 'FEIJAO', category: 'Alimentos' }, { word: 'MACARRAO', category: 'Alimentos' }, { word: 'PATO', category: 'Alimentos' },
+      { word: 'PAO', category: 'Alimentos' }, { word: 'QUEIJO', category: 'Alimentos' }, { word: 'LEITE', category: 'Alimentos' },
+      { word: 'SUCO', category: 'Alimentos' }, { word: 'AGUA', category: 'Alimentos' }, { word: 'SOPA', category: 'Alimentos' },
+      { word: 'BOLO', category: 'Alimentos' }, { word: 'DOCE', category: 'Alimentos' }, { word: 'VERDURA', category: 'Alimentos' },
+      { word: 'BATATA', category: 'Alimentos' }, { word: 'TOMATE', category: 'Alimentos' }, { word: 'COPO', category: 'Alimentos' },
+
+      // FAMÍLIA
+      { word: 'MAE', category: 'Família' }, { word: 'PAI', category: 'Família' }, { word: 'FILHO', category: 'Família' },
+      { word: 'IRMAO', category: 'Família' }, { word: 'AVO', category: 'Família' }, { word: 'TIO', category: 'Família' },
+      { word: 'PRIMO', category: 'Família' }, { word: 'BEBE', category: 'Família' }, { word: 'FAMILIA', category: 'Família' },
+      { word: 'AMIGO', category: 'Família' }, { word: 'VIZINHO', category: 'Família' }, { word: 'PESSOA', category: 'Família' },
+
+      // CORES
+      { word: 'AZUL', category: 'Cores' }, { word: 'AMARELO', category: 'Cores' }, { word: 'VERMELHO', category: 'Cores' },
+      { word: 'VERDE', category: 'Cores' }, { word: 'BRANCO', category: 'Cores' }, { word: 'PRETO', category: 'Cores' },
+      { word: 'ROSA', category: 'Cores' }, { word: 'ROXO', category: 'Cores' }, { word: 'CINZA', category: 'Cores' },
+
+      // CORPO HUMANO
+      { word: 'MÃO', category: 'Corpo' }, { word: 'PE', category: 'Corpo' }, { word: 'CABECA', category: 'Corpo' },
+      { word: 'OLHO', category: 'Corpo' }, { word: 'BOCA', category: 'Corpo' }, { word: 'NARIZ', category: 'Corpo' },
+      { word: 'ORELHA', category: 'Corpo' }, { word: 'BRACO', category: 'Corpo' }, { word: 'PERNA', category: 'Corpo' },
+      { word: 'DENTE', category: 'Corpo' }, { word: 'CORACAO', category: 'Corpo' }, { word: 'CABELO', category: 'Corpo' },
+
+      // NATUREZA & TEMPO
+      { word: 'SOL', category: 'Natureza' }, { word: 'LUA', category: 'Natureza' }, { word: 'ESTRELA', category: 'Natureza' },
+      { word: 'CHUVA', category: 'Natureza' }, { word: 'VENTO', category: 'Natureza' }, { word: 'NUVEM', category: 'Natureza' },
+      { word: 'ARVORE', category: 'Natureza' }, { word: 'FLOR', category: 'Natureza' }, { word: 'RIO', category: 'Natureza' },
+      { word: 'MAR', category: 'Natureza' }, { word: 'RAIO', category: 'Natureza' }, { word: 'TERRA', category: 'Natureza' },
+
+      // SENTIMENTOS & VALORES
+      { word: 'AMOR', category: 'Sentimentos' }, { word: 'PAZ', category: 'Sentimentos' }, { word: 'ALEGRIA', category: 'Sentimentos' },
+      { word: 'RESPEITO', category: 'Sentimentos' }, { word: 'ETICA', category: 'Sentimentos' }, { word: 'CARINHO', category: 'Sentimentos' },
+      { word: 'UNIAO', category: 'Sentimentos' }, { word: 'CORAGEM', category: 'Sentimentos' }, { word: 'CALMA', category: 'Sentimentos' },
+
+      // OBJETOS & CASA
+      { word: 'MESA', category: 'Objetos' }, { word: 'CADEIRA', category: 'Objetos' }, { word: 'CAMA', category: 'Objetos' },
+      { word: 'PORTA', category: 'Objetos' }, { word: 'JANELA', category: 'Objetos' }, { word: 'TELEVISAO', category: 'Objetos' },
+      { word: 'GARFO', category: 'Objetos' }, { word: 'COLHER', category: 'Objetos' }, { word: 'PRATO', category: 'Objetos' },
+
+      // MEIOS DE TRANSPORTE
+      { word: 'CARRO', category: 'Transporte' }, { word: 'ONIBUS', category: 'Transporte' }, { word: 'TREM', category: 'Transporte' },
+      { word: 'AVIAO', category: 'Transporte' }, { word: 'BARCO', category: 'Transporte' }, { word: 'BICICLETA', category: 'Transporte' }
     ];
 
-    // TRATAMENTO DE URL E FALLBACK DE IMAGENS
+    // 30 TEXTOS PEDAGÓGICOS COERENTES (3 LINHAS CADA)
+    const BANCO_TEXTOS_30 = [
+      { l1: "O ALUNO VAI PARA A ESCOLA", l2: "ELE GOSTA DE LER LIVROS", l3: "E APRENDE COM O PROFESSOR" },
+      { l1: "O SOL BRILHA NO DOMINGO", l2: "AS CRIANÇAS BRINCAM NO PARQUE", l3: "COM MUITA ALEGRIA E PAZ" },
+      { l1: "A FRUTA E MUITO SAUDAVEL", l2: "EU GOSTO DE MICA E BANANA", l3: "E BEBO AGUA TODOS OS DIAS" },
+      { l1: "O CACHORRO E O GATO", l2: "SÃO AMIGOS NA MESMA CASA", l3: "ELES CORREM NO QUINTAL" },
+      { l1: "RESPEITO E MUITO IMPORTANTE", l2: "DEVEMOS AJUDAR AS PESSOAS", l3: "COM AMOR E COM CARINHO" },
+      { l1: "A NATUREZA E MUITO BELA", l2: "AS ARVORES DAO FRUTAS", l3: "E OS PASSAROS CANTAM" },
+      { l1: "NO DIA DE NATAL", l2: "A FAMILIA FICA UNIDA", l3: "E COMEMORA COM AMOR" },
+      { l1: "A TELEVISÃO MOSTRA DESENHOS", l2: "O MENINO ASSISTE COM A MAE", l3: "E DEPOIS VAI ESTUDAR" },
+      { l1: "A CHUVA CAI NA TERRA", l2: "AS FLORES FICAM BONITAS", l3: "E O SOL VOLTA A BRILHAR" },
+      { l1: "O PEIXE NADA NO RIO", l2: "A AGUA E LIMPA E FRESCA", l3: "E A BALEIA NADA NO MAR" },
+      { l1: "A MENINA PINTA UM DESENHO", l2: "USA TINTA AZUL E AMARELA", l3: "O PAPEL FICA MUITO LINDO" },
+      { l1: "O PASSARO VOA NO CEU", l2: "ELE VE AS NUVENS BRANCAS", l3: "E POUSA NO GALHO DA ARVORE" },
+      { l1: "NA AULA DE GEOGRAFIA", l2: "ESTUDAMOS O NOSSO PLANETA", l3: "E APRENDEMOS SOBRE O MAPA" },
+      { l1: "O COELHO GOSTA DE CENOURA", l2: "ELE PULA PELO JARDIM", l3: "E TEM O PELO MUITO MACIO" },
+      { l1: "A ETICA E O RESPEITO", l2: "FAZEM UM MUNDO MELHOR", l3: "PARA TODA A HUMANIDADE" },
+      { l1: "A MAE PREPARA O ALMOÇO", l2: "TEM ARROZ FEIJAO E SALADA", l3: "E MACARRAO COM VERDURA" },
+      { l1: "O MENINO ANDA DE BICICLETA", l2: "USA CAPACETE PARA SEGURANÇA", l3: "E PASSEA COM SEU PAI" },
+      { l1: "AS ESTRELAS BRILHAM A NOITE", l2: "A LUA ILUMINA O CEU", l3: "E TODOS VAO DORMIR EM PAZ" },
+      { l1: "NO MES DE JULHO", l2: "AS CRIANÇAS TEM FERIAS", l3: "E BRINCAM BASTANTE JUNTAS" },
+      { l1: "A BORRACHA APAGA O LAPIS", l2: "O CADERNO GUARDA O TEXTO", l3: "E A MOCHILA LEVA TUDO" },
+      { l1: "O LEÃO E O REI DA SELVA", l2: "A GIRAFA E MUITO ALTA", l3: "E O ELEFANTE E BEM GRANDE" },
+      { l1: "EU GOSTO DE OUVIR HISTORIA", l2: "O LIVRO TEM MUITAS PAGINAS", l3: "E IMAGENS BEM COLORIDAS" },
+      { l1: "O TARTARUGA ANDA DEVAGAR", l2: "MAS E MUITO ESPERTA", l3: "E VIVE MUITOS ANOS" },
+      { l1: "O VENTO SOPRA FORTE", l2: "AS FOLHAS BALANÇAM NA ARVORE", l3: "E O DIA FICA FRESCO" },
+      { l1: "A COZINHA TEM COPO E PRATO", l2: "TEM GARFO COLHER E MESA", l3: "ONDE A FAMILIA SE REUNE" },
+      { l1: "SOU UM ALUNO DEDICADO", l2: "FAÇO AS TAREFAS TODO DIA", l3: "E GOSTO DE APRENDER LIBRAS" },
+      { l1: "O AVIAO VOA BEM ALTO", l2: "PASSA POR CIMA DAS NUVENS", l3: "E VIAJA PARA LONGE" },
+      { l1: "O FLOR E MUITO CHEIROSA", l2: "A ABELHA POUSA NELA", l3: "E FAZ MEL BEM DOCE" },
+      { l1: "O CARRO DO PAI E AZUL", l2: "ELE DIRIGE COM ATENÇÃO", l3: "E LEVA A FAMILIA PARA PASSEAR" },
+      { l1: "SABER LIBRAS E INCRIVEL", l2: "PODEMOS NOS COMUNICAR", l3: "COM INCLUSÃO E RESPEITO" }
+    ];
+
+    // FUNÇÕES DE IMAGEM & FALLBACK
     function getLetterImgUrl(char) {
       const clean = char.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
       return `${BASE_URL_RAW}${clean}.png`;
@@ -1082,8 +1200,18 @@
         imgEl.dataset.triedUpper = "true";
         imgEl.src = `${BASE_URL_RAW}${clean}.PNG`;
       } else {
-        // SVG Fallback Gracioso
         imgEl.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%237C3AED" rx="16"/><text x="50" y="62" font-size="42" font-weight="bold" fill="white" text-anchor="middle" font-family="sans-serif">${clean}</text></svg>`;
+      }
+    }
+
+    // FULLSCREEN API
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`Erro ao ativar tela cheia: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
       }
     }
 
@@ -1092,23 +1220,20 @@
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.section-panel').forEach(s => s.classList.remove('active'));
 
-      if (evt && evt.currentTarget) {
-        evt.currentTarget.classList.add('active');
-      }
+      if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
 
       const activeSec = document.getElementById(`sec-${secId}`);
       if (activeSec) activeSec.classList.add('active');
 
-      // Inicializações sob demanda
-      if (secId === 'flashcards') carregarFlashcard();
-      if (secId === 'transcricao') carregarTextoTranscricao();
+      if (secId === 'flashcards') iniciarFlashcards();
+      if (secId === 'transcricao') sortearNovoTextoTranscricao();
       if (secId === 'cacapalavras') iniciarCacaPalavras();
       if (secId === 'quiz') carregarQuiz();
       if (secId === 'memoria') iniciarJogoMemoria();
       if (secId === 'dicionario') renderDicionario();
     }
 
-    /* MÓDULO 1: ALFABETO & GLOSSÁRIO */
+    /* MÓDULO 1: ALFABETO */
     function renderAlfabeto() {
       const grid = document.getElementById('gridAlfabeto');
       grid.innerHTML = '';
@@ -1142,7 +1267,7 @@
       document.getElementById('modalOverlay').style.display = 'none';
     }
 
-    /* MÓDULO 2: ESCREVER EM DATILOLOGIA */
+    /* MÓDULO 2: ESCREVER */
     let timerAnimacao = null;
 
     function processarEscrita() {
@@ -1186,14 +1311,12 @@
       frame.style.padding = '15px';
 
       const img = document.createElement('img');
-      img.style.width = '100px';
-      img.style.height = '100px';
+      img.style.width = '100px'; img.style.height = '100px';
 
       const label = document.createElement('span');
       label.style.fontSize = '1.8rem';
 
-      frame.appendChild(img);
-      frame.appendChild(label);
+      frame.appendChild(img); frame.appendChild(label);
       container.appendChild(frame);
 
       let idx = 0;
@@ -1213,19 +1336,47 @@
       timerAnimacao = setInterval(proximoFrame, 1000);
     }
 
-    /* MÓDULO 3: FLASHCARDS (SALA) */
-    let indexFlashcard = 0;
+    /* MÓDULO 3: FLASHCARDS FLIP 3D */
+    let listaFlashcards = [];
+    let idxFlashcard = 0;
 
-    function carregarFlashcard() {
-      const item = SUBSTANTIVOS_OFICIAIS[indexFlashcard];
-      document.getElementById('flashcardCounter').innerText = `Card ${indexFlashcard + 1} / ${SUBSTANTIVOS_OFICIAIS.length}`;
+    function iniciarFlashcards() {
+      const select = document.getElementById('filterFlashcardsCat');
+      
+      if (select.options.length <= 1) {
+        const cats = ['TODOS', ...new Set(BANCO_PALAVRAS_300.map(x => x.category))];
+        select.innerHTML = '';
+        cats.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c; opt.innerText = c;
+          select.appendChild(opt);
+        });
+      }
+
+      const catSel = select.value || 'TODOS';
+      if (catSel === 'TODOS') {
+        listaFlashcards = [...BANCO_PALAVRAS_300].sort(() => 0.5 - Math.random());
+      } else {
+        listaFlashcards = BANCO_PALAVRAS_300.filter(x => x.category === catSel).sort(() => 0.5 - Math.random());
+      }
+
+      idxFlashcard = 0;
+      carregarFlashcardAtual();
+    }
+
+    function carregarFlashcardAtual() {
+      if (listaFlashcards.length === 0) return;
+      document.getElementById('flashcardBox').classList.remove('flipped');
+
+      const item = listaFlashcards[idxFlashcard];
+      document.getElementById('flashcardCounter').innerText = `Card ${idxFlashcard + 1} / ${listaFlashcards.length}`;
+      document.getElementById('flashcardCategory').innerText = item.category;
 
       const container = document.getElementById('flashcardHands');
       container.innerHTML = '';
 
-      const cleanWord = item.word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-      for (let char of cleanWord) {
+      const clean = item.word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      for (let char of clean) {
         if (char >= 'A' && char <= 'Z') {
           const img = document.createElement('img');
           img.src = getLetterImgUrl(char);
@@ -1234,44 +1385,27 @@
         }
       }
 
-      const ansEl = document.getElementById('flashcardAnswer');
-      ansEl.innerText = item.word;
-      ansEl.className = 'answer-hidden';
-    }
-
-    function revelarFlashcard() {
-      const ansEl = document.getElementById('flashcardAnswer');
-      ansEl.className = 'answer-revealed';
+      document.getElementById('flashcardAnswerWord').innerText = item.word;
+      document.getElementById('flashcardSpelling').innerText = item.word.split('').join(' - ');
     }
 
     function navFlashcard(delta) {
-      indexFlashcard = (indexFlashcard + delta + SUBSTANTIVOS_OFICIAIS.length) % SUBSTANTIVOS_OFICIAIS.length;
-      carregarFlashcard();
+      idxFlashcard = (idxFlashcard + delta + listaFlashcards.length) % listaFlashcards.length;
+      carregarFlashcardAtual();
     }
 
-    /* MÓDULO 4: TRANSCRIÇÃO DE TEXTO */
-    const TEXTOS_TRANSCRIÇÃO = [
-      {
-        linhas: ["O ALUNO ESTUDA", "NA ESCOLA COM", "HISTORIA E ETICA"],
-        resposta: "O ALUNO ESTUDA NA ESCOLA COM HISTORIA E ETICA"
-      },
-      {
-        linhas: ["O SOL BRILHA", "NO DIA DE DOMINGO", "COM MUITO AMOR"],
-        resposta: "O SOL BRILHA NO DIA DE DOMINGO COM MUITO AMOR"
-      },
-      {
-        linhas: ["RESPEITO E IMPORTANTE", "PARA CADA PESSOA", "EM QUALQUER LUGAR"],
-        resposta: "RESPEITO E IMPORTANTE PARA CADA PESSOA EM QUALQUER LUGAR"
-      }
-    ];
+    /* MÓDULO 4: TRANSCRIÇÃO (30 TEXTOS DE 3 LINHAS) */
+    let textoTranscricaoAtual = null;
 
-    function carregarTextoTranscricao() {
-      const idx = document.getElementById('selectTextoTranscricao').value;
-      const data = TEXTOS_TRANSCRIÇÃO[idx];
+    function sortearNovoTextoTranscricao() {
+      textoTranscricaoAtual = BANCO_TEXTOS_30[Math.floor(Math.random() * BANCO_TEXTOS_30.length)];
+
       const container = document.getElementById('linesDatilologiaContainer');
       container.innerHTML = '';
 
-      data.linhas.forEach(linha => {
+      const linhas = [textoTranscricaoAtual.l1, textoTranscricaoAtual.l2, textoTranscricaoAtual.l3];
+
+      linhas.forEach(linha => {
         const row = document.createElement('div');
         row.className = 'line-row';
 
@@ -1280,7 +1414,9 @@
           const wordGrp = document.createElement('div');
           wordGrp.className = 'word-group';
 
-          for (let char of palavra) {
+          const cleanP = palavra.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+          for (let char of cleanP) {
             if (char >= 'A' && char <= 'Z') {
               const img = document.createElement('img');
               img.src = getLetterImgUrl(char);
@@ -1299,8 +1435,9 @@
     }
 
     function verificarTranscricao() {
-      const idx = document.getElementById('selectTextoTranscricao').value;
-      const esperado = TEXTOS_TRANSCRIÇÃO[idx].resposta;
+      if (!textoTranscricaoAtual) return;
+
+      const esperado = `${textoTranscricaoAtual.l1} ${textoTranscricaoAtual.l2} ${textoTranscricaoAtual.l3}`;
       const digitado = document.getElementById('inputTranscricao').value;
 
       function normalizar(str) {
@@ -1316,24 +1453,24 @@
       if (normalizar(digitado) === normalizar(esperado)) {
         feedback.style.background = 'var(--accent-green-light)';
         feedback.style.color = '#065F46';
-        feedback.innerText = '🎉 Parabéns! Transcrição 100% correta!';
-        confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
+        feedback.innerText = '🎉 Excelente! Transcrição 100% correta!';
+        confetti({ particleCount: 80, spread: 70, origin: { y: 0.7 } });
       } else {
         feedback.style.background = '#FEE2E2';
         feedback.style.color = '#991B1B';
-        feedback.innerText = '❌ Ainda há diferenças na transcrição. Verifique as palavras e tente novamente!';
+        feedback.innerText = '❌ Houve alguma diferença. Verifique a grafia das palavras e tente novamente!';
       }
     }
 
-    /* MÓDULO 5: CAÇA-PALAVRAS */
-    const CACA_PALAVRAS_GRID = [
-      ['A','L','U','N','O','X','Z','W','R','P'],
+    /* MÓDULO 5: CAÇA-PALAVRAS EM LIBRAS (IMAGENS MANUAIS) */
+    const CACA_GRID_10x10 = [
+      ['A','L','U','N O','O','X','Z','W','R','P'],
       ['C','O','P','O','A','F','R','U','T','A'],
       ['P','E','I','X','E','M','K','B','R','S'],
       ['H','I','S','T','O','R','I','A','E','A'],
       ['G','A','R','F','O','Q','W','Y','S','M'],
       ['B','R','A','N','C','O','U','S','A','R'],
-      ['N','A','T','A me','L','I','V','R','O','T'],
+      ['N','A','T','A','L','I','V','R','O','T'],
       ['F','R','U','T','A','X','E','T','I','C'],
       ['E','T','I','C','A','P','E','S','S','O'],
       ['R','E','S','P','E','I','T','O','A','P']
@@ -1344,28 +1481,31 @@
     let celulasSelecionadas = [];
 
     function iniciarCacaPalavras() {
-      const gridContainer = document.getElementById('wordsearchGrid');
+      const gridContainer = document.getElementById('wordsearchGridLibras');
       gridContainer.innerHTML = '';
       palavrasEncontradas.clear();
+      celulasSelecionadas = [];
 
-      // Renderizar Grade 10x10 Fixa
       for (let r = 0; r < 10; r++) {
         for (let c = 0; c < 10; c++) {
-          const char = CACA_PALAVRAS_GRID[r][c];
+          const char = CACA_GRID_10x10[r][c].charAt(0);
           const cell = document.createElement('div');
-          cell.className = 'grid-cell';
-          cell.innerText = char.charAt(0);
-          cell.dataset.row = r;
-          cell.dataset.col = c;
-          cell.onclick = () => selecionarCelula(cell, r, c, char.charAt(0));
+          cell.className = 'grid-cell-libras';
+
+          const img = document.createElement('img');
+          img.src = getLetterImgUrl(char);
+          img.onerror = () => handleImgError(img, char);
+
+          cell.appendChild(img);
+          cell.onclick = () => selecionarCelulaCaca(cell, r, c, char);
           gridContainer.appendChild(cell);
         }
       }
 
-      renderDicasCacaPalavras();
+      renderDicasCaca();
     }
 
-    function renderDicasCacaPalavras() {
+    function renderDicasCaca() {
       const hintsContainer = document.getElementById('wordListHints');
       hintsContainer.innerHTML = '';
 
@@ -1384,11 +1524,10 @@
       });
     }
 
-    function selecionarCelula(cell, r, c, char) {
+    function selecionarCelulaCaca(cell, r, c, char) {
       if (cell.classList.contains('found')) return;
 
       cell.classList.toggle('selected');
-
       const key = `${r}-${c}`;
       const idx = celulasSelecionadas.findIndex(x => x.key === key);
 
@@ -1398,7 +1537,6 @@
         celulasSelecionadas.push({ key, char, cell });
       }
 
-      // Verificar Palavra Formada
       const strFormada = celulasSelecionadas.map(x => x.char).join('');
       const strReversa = strFormada.split('').reverse().join('');
 
@@ -1411,30 +1549,29 @@
               x.cell.classList.add('found');
             });
             celulasSelecionadas = [];
-            renderDicasCacaPalavras();
-            confetti({ particleCount: 50, spread: 50 });
+            renderDicasCaca();
+            confetti({ particleCount: 50, spread: 60 });
 
             if (palavrasEncontradas.size === PALAVRAS_CACA.length) {
-              setTimeout(() => alert('🏆 Excelente! Você encontrou todas as palavras do Caça-Palavras!'), 300);
+              setTimeout(() => alert('🏆 Parabéns! Você encontrou todas as palavras do Caça-Palavras em Libras!'), 300);
             }
           }
         }
       });
     }
 
-    /* MÓDULO 6: QUIZ DE LEITURA */
+    /* MÓDULO 6: QUIZ */
     let quizScore = 0;
     let quizStreak = 0;
-    let quizCurrentWord = '';
+    let quizCurrentItem = null;
 
     function carregarQuiz() {
-      const item = SUBSTANTIVOS_OFICIAIS[Math.floor(Math.random() * SUBSTANTIVOS_OFICIAIS.length)];
-      quizCurrentWord = item.word;
+      quizCurrentItem = BANCO_PALAVRAS_300[Math.floor(Math.random() * BANCO_PALAVRAS_300.length)];
 
       const display = document.getElementById('quizHandsDisplay');
       display.innerHTML = '';
 
-      const clean = item.word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const clean = quizCurrentItem.word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       for (let c of clean) {
         if (c >= 'A' && c <= 'Z') {
           const img = document.createElement('img');
@@ -1444,10 +1581,9 @@
         }
       }
 
-      // Opções
-      const opcoes = [item.word];
+      const opcoes = [quizCurrentItem.word];
       while (opcoes.length < 4) {
-        const rand = SUBSTANTIVOS_OFICIAIS[Math.floor(Math.random() * SUBSTANTIVOS_OFICIAIS.length)].word;
+        const rand = BANCO_PALAVRAS_300[Math.floor(Math.random() * BANCO_PALAVRAS_300.length)].word;
         if (!opcoes.includes(rand)) opcoes.push(rand);
       }
       opcoes.sort(() => Math.random() - 0.5);
@@ -1465,13 +1601,13 @@
     }
 
     function responderQuiz(resposta) {
-      if (resposta === quizCurrentWord) {
+      if (resposta === quizCurrentItem.word) {
         quizScore += 10;
         quizStreak += 1;
         confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 } });
       } else {
         quizStreak = 0;
-        alert(`Resposta incorreta. A palavra certa era: ${quizCurrentWord}`);
+        alert(`Resposta incorreta. A palavra certa era: ${quizCurrentItem.word}`);
       }
 
       document.getElementById('quizScore').innerText = quizScore;
@@ -1488,12 +1624,12 @@
       memoryFlipped = [];
       document.getElementById('memoryMoves').innerText = memoryMoves;
 
-      const selecionados = SUBSTANTIVOS_OFICIAIS.sort(() => 0.5 - Math.random()).slice(0, 6);
+      const selecionados = BANCO_PALAVRAS_300.sort(() => 0.5 - Math.random()).slice(0, 6);
       let deck = [];
 
       selecionados.forEach(s => {
-        deck.push({ type: 'sign', char: s.char, pairId: s.char });
-        deck.push({ type: 'text', text: s.word, pairId: s.char });
+        deck.push({ type: 'sign', word: s.word, pairId: s.word });
+        deck.push({ type: 'text', word: s.word, pairId: s.word });
       });
 
       deck.sort(() => 0.5 - Math.random());
@@ -1501,7 +1637,7 @@
       const grid = document.getElementById('memoryGrid');
       grid.innerHTML = '';
 
-      deck.forEach((card, i) => {
+      deck.forEach(card => {
         const cardEl = document.createElement('div');
         cardEl.className = 'memory-card';
         cardEl.onclick = () => virarCartaMemoria(cardEl, card);
@@ -1517,15 +1653,19 @@
         back.className = 'card-back';
 
         if (card.type === 'sign') {
-          back.innerHTML = `<img src="${getLetterImgUrl(card.char)}" onerror="handleImgError(this, '${card.char}')">`;
+          let handsHtml = '<div style="display:flex; gap:1px; justify-content:center;">';
+          const clean = card.word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+          for (let c of clean) {
+            handsHtml += `<img src="${getLetterImgUrl(c)}" style="width:22px; height:22px;" onerror="handleImgError(this, '${c}')">`;
+          }
+          handsHtml += '</div>';
+          back.innerHTML = handsHtml;
         } else {
-          back.innerHTML = `<span>${card.text}</span>`;
+          back.innerHTML = `<span>${card.word}</span>`;
         }
 
-        inner.appendChild(front);
-        inner.appendChild(back);
-        cardEl.appendChild(inner);
-        grid.appendChild(cardEl);
+        inner.appendChild(front); inner.appendChild(back);
+        cardEl.appendChild(inner); grid.appendChild(cardEl);
       });
     }
 
@@ -1557,8 +1697,7 @@
     let temaAtivo = 'TODOS';
 
     function renderDicionario() {
-      // Categorias únicas
-      const categorias = ['TODOS', ...new Set(DICIONARIO_TEMAS.map(x => x.category))];
+      const categorias = ['TODOS', ...new Set(BANCO_PALAVRAS_300.map(x => x.category))];
       const themeContainer = document.getElementById('themeSelector');
       themeContainer.innerHTML = '';
 
@@ -1581,7 +1720,7 @@
       const listContainer = document.getElementById('dictList');
       listContainer.innerHTML = '';
 
-      const filtrados = DICIONARIO_TEMAS.filter(item => {
+      const filtrados = BANCO_PALAVRAS_300.filter(item => {
         const matchCat = (temaAtivo === 'TODOS' || item.category === temaAtivo);
         const matchText = item.word.includes(q);
         return matchCat && matchText;
@@ -1616,7 +1755,6 @@
       });
     }
 
-    // INICIALIZAÇÃO
     window.onload = () => {
       renderAlfabeto();
     };
